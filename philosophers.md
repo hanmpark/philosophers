@@ -181,3 +181,57 @@ int	main(int argc, char *argv[]) {
 Why does it happen only when we put a big number ?
 It's simply because if you only have 100 iterations, it will be finished by the time it creates the second thread. Thus, you don't have anything interliving.
 Even then, it could just happen. It's just that there are fewer chances for it to happen. In computer science, it's incredibly important that our data is exact.
+
+### What is a mutex in C ? (pthread_mutex)
+
+```c
+#include <stdlib.h>
+#include <stdio.h>
+#include <pthread.h>
+
+int	mails = 0;
+int	lock = 0;
+
+void	*routine() {
+	for (int i = 0; i < 1000000; i++) {
+		if (lock == 1) {
+			// wait until the lock is 0
+			// We don't need the lock variable acutally
+		}
+		lock = 1;
+		mails++;
+		lock = 0;
+	}
+}
+```
+
+We need this:
+```c
+pthread_mutex_t mutex;
+
+int	main(int argc, char *argv[]) {
+	pthread_mutex_init(&mutex, NULL); // it's gonna set everything to default
+	pthread_mutex_destroy(&mutex);
+	return 0;
+}
+```
+To use you have to do this:
+```c
+void	*routine() {
+	for (int i = 0; i < 1000000; i++) {
+		pthread_mutex_lock(&mutex); // this one function does all that for us
+		mails++;
+		pthread_mutext_unlock(&mutex);
+		// read_mails
+		// increment
+		// write mails
+	}
+}
+```
+
+This locking and unlocking is basically protecting a part of the code from other threads.
+Not all instructions have to be like that. If one thread has its own instruction, no need to mutex.
+
+It's better to not use mutexes, use it only when you have to for rapidity's sake.
+
+A race condition can only happen on a multi core processor.
