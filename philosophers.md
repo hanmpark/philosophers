@@ -235,3 +235,74 @@ Not all instructions have to be like that. If one thread has its own instruction
 It's better to not use mutexes, use it only when you have to for rapidity's sake.
 
 A race condition can only happen on a multi core processor.
+
+### How to create threads in a loop (pthread_create)
+
+In the previous code, we could see that there is a lot of ```pthrea_create``` calls. Now, we will look at how we could call it inside a loop.
+
+```c
+pthread_t	p1, p2, p3, p4;
+```
+Instead of this, we could create an array instead.
+```c
+pthread_t	th[4];
+int			i;
+pthread_mutex_init(&mutex, NULL);
+for (i = 0; i < 4; i++) {
+	if (pthread_create(&th[i], NULL, &routine, NULL) != 0) {
+		perror("Failed to create thread");
+		return 1;
+	}
+	if (pthread_join(th[i], NULL) != 0) {
+		return 2;
+	}
+}
+pthread_mutex_destroy(&mutex);
+printf("Number of mails: %d\n", mails);
+return 0;
+```
+The code above looks fine at first glance... At no point we will have more than 1 thread runnning at the same time. The first thread gets created, then the system waits for the thread to finish its execution and only then it will create another thread.
+Basically, do not create and join the thread in the same loop:
+```c
+for (i = 0; i < 4; i++) {
+	if (pthread_create(&th[i], NULL, &routine, NULL) != 0) {
+		perror("Failed to create thread");
+		return 1;
+	}
+	printf("Thread %d has started\n", i);
+}
+for (i = 0; i < 4; i++) {
+	if (pthread_join(th[i], NULL) != 0) {
+		return 2;
+	}
+	printf("Thread %d has finished execution\n", i);
+}
+```
+
+### Get return value from a thread (pthread_join)
+
+The code shown below, is a simple program that gives you the results of dice from the threads.
+
+```c
+#include <stdlib.h>
+#include <stdio.h>
+#include <pthread.h>
+#include <time.h>
+
+void	*roll_dice() {
+	int	value = (rand() % 6) + 1;
+	printf("%d\n", value);
+}
+
+int	main(int argc, char *argv[]) {
+	srand(time(NULL));
+	pthread_t	th;
+	if (pthread_create(&th, NULL, &roll_dice, NULL) != 0) {
+		return 1;
+	}
+	if (pthread_join(th, NULL) != 0) {
+		return 2;
+	}
+	return 0;
+}
+```
