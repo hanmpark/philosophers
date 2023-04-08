@@ -306,3 +306,194 @@ int	main(int argc, char *argv[]) {
 	return 0;
 }
 ```
+
+To get a return value from a thread we are going to look at the ```pthread_join()``` function.
+```c
+int	pthread_join(pthread_t __th, void **__thread_return);
+```
+As you can see, the second parameter of the function takes a double pointer to void. This function is going to take a reference to a pointer to void. It is going to set the value a variable.
+
+```c
+int	*res;
+srand(time(NULL));
+pthread_t	th;
+...
+if (pthread_join(th, (void **) &res) != 0) {
+	return 2;
+}
+printf("Result: %d\n", *res);
+return 0;
+```
+```c
+void	*roll_dice() {
+	int	value = (rand() % 6) + 1;
+	int	*result = malloc(sizeof(int));
+	*result = value;
+	return (void *) result;
+}
+```
+
+### How to pass arguments to threads in C
+
+> PROBLEM: create 10 threads, each taking a unique prime from the primes array and print int on the screen.
+
+```c
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+
+int	primes[10] = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 };
+
+void	*routine(void *arg) {
+	int	index = (int *)*arg;
+	printf("%d ", primes[index]);
+	free(arg);
+}
+
+int	main(int argc, char *argv[]) {
+	pthread_t th[10];
+	for (int i = 0; i < 10; i++) {
+		int	*a = malloc(sizeof(int));
+		*a = i;
+		if (pthread_create(&th[i], NULL, &routine, a) != 0) {
+			perror("Failed to create thread");
+		}
+	}
+	for (int i = 0; i < 10; i++) {
+		if (pthread_join(th[i], NULL) != 0) {
+			perror("Failed to join thread");
+		}
+	}
+	return 0;
+}
+```
+
+### Practical example for using threads #1 (summing numbers from an array)
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+
+int	primes[10] = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 };
+
+void	*routine(void *arg) {
+	int	index = *(int *)arg;
+	int	sum = 0;
+	for (int i = 0; i < 5; i++) {
+		sum += primes[index + i];
+	}
+	*(int *)arg = sum;
+	return arg;
+}
+
+int	main(int argc, char *argv[]) {
+	pthread_t	th[2];
+	int	i;
+	for (i = 0; i < 2; i++) {
+		int	*a = malloc(sizeof(int));
+		*a = i * 5;
+		if (pthread_create(&th[i], NULL, &routine, a) != 0) {
+			perror("Failed to create thread");
+		}
+	}
+	int	globalSum = 0;
+	for (i = 0; i < 2; i++) {
+		int	*r;
+		if (pthread_join(th[i], (void **) &r) != 0) {
+			perror("Failed to join thread");
+		}
+		globalSum += *r;
+		free(r);
+	}
+	printf("Global sum: %d\n", globalSum);
+	return 0;
+}
+```
+
+### What is pthread_t ?
+
+```c
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <time.h>
+#include <sys/syscall.h>
+
+#define TRHEAD_NUM 2
+
+void	*routine(void *args) {
+	pthread_t	th = pthread_self(); // managed by pthread API
+	printf("%ul\n", th); // id of a thread
+	printf("%d\n", (pid_t) syscall(SYS_gettid)); // internal thread id
+}
+
+int	main(int argc, char *argv[]) {
+	pthread_t	th[THREAD_NUM];
+	int			i;
+	for (i = 0; i < THREAD_NUM; i++) {
+		if (pthread_create(&th[i], NULL, &routine, NULL) != 0) {
+			perror("Failed to create thread");
+		}
+		printf("%ul\n", th[i]); // id of a thread
+	}
+
+	for (i = 0; i < THREAD_NUM; i++) {
+		if (pthread_join(th[i], NULL) != 0) {
+			perror("Failed to join thread");
+		}
+	}
+	return 0;
+}
+```
+
+pthread_t should be treated as an opaque data type. Because it could be a struct, unsigned long long, etc. You should never work with their value. Do not assume that pthread_t is a certain type like the code above. It might work but not work as well.
+
+### What are detached threads ?
+
+```c
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <time.h>
+#include <sys/syscall.h>
+
+#define TRHEAD_NUM 2
+
+void	*routine(void *args) {
+	sleep(1);
+	printf("Finished execution\n");
+}
+
+int	main(int argc, char *argv[]) {
+	pthread_t	th[THREAD_NUM];
+	pthread_attr_t	detachedThread;
+	pthread_attr_init(&detachedThread);
+	pthread_attr_setdetachstate(&detachedThread, PHTREAD_CREATE_DETACHED);
+
+	int	i;
+	for (i = 0; i < THREAD_NUM; i++) {
+		if (pthread_create(&th[i], &detachedThread, &routine, NULL) != 0) {
+			perror("Failed to create thread");
+		}
+		pthread_detach(th[i]);
+	}
+
+	for (i = 0; i < THREAD_NUM; i++) {
+		if (pthread_join(th[i], NULL) != 0) {
+			perror("Failed to join thread");
+		}
+	}
+
+	pthread_attr_destroy(&detachedThread);
+
+	return 0;
+}
+```
+
+A detached thread is no longer joinable. They actually clear their own resources. We will not get the message written in routine() because the actual process has finished its execution, thus the main thread that created the threads, failed to join them.
