@@ -497,3 +497,57 @@ int	main(int argc, char *argv[]) {
 ```
 
 A detached thread is no longer joinable. They actually clear their own resources. We will not get the message written in routine() because the actual process has finished its execution, thus the main thread that created the threads, failed to join them.
+A detached thread is usually used when you have a long running process that you want to start inside the main thread. You don't want the main thread to keep running. There is little to no point for the main thread to wait for them.
+
+### Deadlocks in C
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <time.h>
+
+#define THREAD_NUM 8
+
+pthread_mutex_t	mutexFuel;
+int	fuel = 50;
+pthread_mutex_t	mutexWater;
+int	water = 10;
+
+void	*routine(void *args) {
+	if (rand() % 2 == 0) {
+		pthread_mutex_lock(&mutexFuel); // possible deadlock
+		sleep(1);
+		pthread_mutex_lock(&mutexWater);
+	} else {
+		pthread_mutex_lock(&mutexWater);
+		sleep(1);
+		pthread_mutex_lock(&mutexFuel);
+	}
+	fuel += 50;
+	water = fuel;
+	pthread_mutex_unlock(&mutexFuel);
+}
+
+int	main(int argc, char *argv[]) {
+	pthread_t	th[THREAD_NUM];
+	pthread_mutex_init(&mutexFuel, NULL);
+	int	i;
+	for (i = 0; i < THREAD_NUM; i++) {
+		if (pthread_create(&th[i], NULL, &routine, NULL) != 0) {
+			perror("Failed to create thread");
+		}
+	}
+
+	for (i = 0; i < THREAD_NUM; i++) {
+		if (pthread_join(th[i], NULL) != 0) {
+			perror("Failed to join thread");
+		}
+	}
+	pthread_mutex_destroy(&mutexFuel);
+	return 0;
+}
+```
+
+Be careful at the order that you are locking the mutexes.
