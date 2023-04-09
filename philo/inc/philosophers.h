@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 17:15:33 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/04/09 16:57:54 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:40:26 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 
 typedef struct s_philo
 {
-	int	fork;
 	int	sleep;
 	int	think;
 }	t_philo;
