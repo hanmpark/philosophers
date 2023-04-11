@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 17:15:23 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/04/09 16:58:00 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:32:55 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	init_data(t_data *data, int argc, char **argv)
 	if (argc == 6)
 		data->nbr_eat = ft_atoi(argv[5]);
 	else
-		data->nbr_eat = 0;
+		data->nbr_eat = -1;
 }
 
 int	main(int argc, char **argv)
@@ -34,6 +34,6 @@ int	main(int argc, char **argv)
 		ft_error(ERR_ARGS);
 	}
 	init_data(&data, argc, argv);
-	init_philosophers(&data);
+	init_philo(&data);
 	return (0);
 }

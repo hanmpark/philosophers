@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 17:03:40 by hanmpark          #+#    #+#              #
-#    Updated: 2023/04/09 16:12:54 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/04/11 16:56:10 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,10 @@ LGREEN = \033[38;5;155m
 # ---------------------------- SOURCES / OBJECTS ----------------------------- #
 SRC_PATH = ./src/
 SRC = ${addprefix ${SRC_PATH}, philosophers.c \
-								init_philosophers.c \
-								utils.c}
+								utils.c \
+								dining.c \
+								time.c \
+								init_philosophers.c}
 
 OBJ = ${SRC:.c=.o}
 

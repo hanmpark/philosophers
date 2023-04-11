@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 15:19:08 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/04/09 16:12:23 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:33:22 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 static bool	is_digit(char c)
 {
-	if (c >= '0' && c <= '9')
-		return (true);
-	return (false);
+	return (c >= '0' && c <= '9');
+}
+
+static bool	is_space(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || \
+		c == '\v');
 }
 
 int	ft_atoi(char *str)
@@ -27,8 +31,7 @@ int	ft_atoi(char *str)
 
 	i = 0;
 	negative = 1;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || \
-		str[i] == '\r' || str[i] == '\f' || str[i] == '\v')
+	while (is_space(str[i]) == true)
 		i++;
 	if (str[i] == '-')
 	{

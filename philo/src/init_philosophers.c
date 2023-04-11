@@ -5,33 +5,56 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/09 15:55:28 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/04/09 16:57:13 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/04/11 15:14:56 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/04/11 15:41:08 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <philosophers.h>
+#include "philosophers.h"
 
-static void	set_philo(t_philo *philo, int nbr_philo)
+// Initialize the mutexes (forks)
+static void	init_forks(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (i < nbr_philo)
+	while (i < data->nbr_philo)
 	{
-		philo[i].fork = 0;
-		philo[i].sleep = 0;
-		philo[i].think = 0;
+		pthread_mutex_init(&data->fork[i], NULL);
 		i++;
 	}
 }
 
-void	init_philosophers(t_data *data)
+// Initialize the threads (philsophers) and start the routines
+static void	init_philosophers(t_data *data)
+{
+	int	i;
+	int	*id;
+
+	i = 0;
+	while (i < data->nbr_philo)
+	{
+		data->id = malloc(sizeof(int));
+		*data->id = i;
+		pthread_create(&data->philosopher[i], NULL, &philosopher_routine, data);
+		i++;
+	}
+}
+
+// Initialize the mutexes (forks) and philosophers (threads)
+void	init_dining(t_data *data)
 {
 	if (data->nbr_philo < 1)
 		ft_error(ERR_PHILO);
-	data->philo = malloc((data->nbr_philo) * sizeof(t_philo));
-	if (data->philo == NULL)
+	data->fork = malloc(data->nbr_philo * sizeof(pthread_mutex_t));
+	if (!data->fork)
 		ft_error(ERR_MALLOC);
-	set_philo(data->philo, data->nbr_philo);
+	data->philosopher = malloc(data->nbr_philo * sizeof(pthread_t));
+	if (!data->philosopher)
+	{
+		free(data->fork);
+		ft_error(ERR_MALLOC);
+	}
+	init_forks(data);
+	init_philosophers(data);
 }
