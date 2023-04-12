@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 16:33:47 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/04/11 16:55:37 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:46:27 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ void	wait_time(long long int wait)
 
 	timemark = actual_time();
 	while (actual_time() - timemark < wait)
-		usleep(1000);
+		usleep(100);
 }

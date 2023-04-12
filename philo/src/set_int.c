@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   set_int.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 15:19:08 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/04/11 16:33:22 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:55:00 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,38 @@ static bool	is_space(char c)
 		c == '\v');
 }
 
-int	ft_atoi(char *str)
+static long int	ft_atol(char *nbr)
 {
-	int	negative;
-	int	res;
-	int	i;
+	int			negative;
+	long int	res;
+	int			i;
 
 	i = 0;
 	negative = 1;
-	while (is_space(str[i]) == true)
+	while (is_space(nbr[i]) == true)
 		i++;
-	if (str[i] == '-')
+	if (nbr[i] == '-')
 	{
 		negative = -1;
 		i++;
 	}
-	else if (str[i] == '+')
+	else if (nbr[i] == '+')
 		i++;
 	res = 0;
-	while (str[i] && is_digit(str[i]) == true)
+	while (nbr[i] && is_digit(nbr[i]) == true)
 	{
-		res = res * 10 + (str[i] - '0');
+		res = res * 10 + (nbr[i] - '0');
 		i++;
 	}
 	return (res * negative);
 }
 
-void	ft_error(const char *message)
+int	set_int(char *nbr)
 {
-	perror(message);
-	exit(1);
+	long int	integer;
+
+	integer = ft_atol(nbr);
+	if (integer > INT_MAX || integer < INT_MIN)
+		return (-1);
+	return ((int)integer);
 }
