@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 17:15:33 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/04/12 18:42:02 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:59:00 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,36 +22,52 @@
 # include <stdbool.h>
 # include <limits.h>
 
-# define ALIVE 1
-# define DEAD 0
+# define ERR_ARGS_NBR "Error\nWrong number of arguments\n"
+# define ERR_ARGS_DIGIT "Error\nArguments must only be consisted of digits\n"
+# define ERR_ARGS_INCORRECT "Error\nArguments are not formatted \
+for the program to work\n"
+# define ERR_INIT_PHILO "Error\nA problem occurred when trying to initialize \
+philosophers\n"
 
 typedef struct s_philo
 {
-	pthread_mutex_t	*state;
-	pthread_t		*thread;
-	int				id;
-	int				state;
-	long long int	last_eat;
+	pthread_t		thread;
+	unsigned int	id;
+	unsigned int	times_eat;
+	pthread_mutex_t	eating;
+	time_t			last_eat;
+	struct s_table	*table;
 }	t_philo;
 
 typedef struct s_table
 {
+	unsigned int	number_of_philo;
+	int				dine_left;
+	bool			end_sim;
+	time_t			start_time;
+	time_t			time_to_die;
+	time_t			time_to_eat;
+	time_t			time_to_sleep;
+	pthread_t		watcher;
+	pthread_mutex_t	end_sim_lock;
+	pthread_mutex_t	print;
 	pthread_mutex_t	*fork;
-	pthread_mutex_t	*print;
 	t_philo			*philo;
-	int				nbr_philo;
-	int				nbr_eat;
-	int				end;
-	int				tm_death;
-	int				tm_dine;
-	int				tm_sleep;
 }	t_table;
 
-int		ft_atoi(char *str);
-void	init_dining(t_table *data);
-void	*philosopher_routine(void *arg);
+typedef enum e_state
+{
+	DEAD,
+	ALIVE,
+	EATING,
+	SLEEPING,
+	THINKING
+}	t_state;
 
-long long int	actual_time(void);
-void			wait_time(long long int wait);
+t_table	*prepare_table(int argc, char **argv);
+bool	valid_input(int argc, char **argv);
+int		philo_atoi(char *arg);
+
+int		error_exit(const char *err_message, int exit_no);
 
 #endif
