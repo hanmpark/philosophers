@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 17:15:33 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/04/13 16:59:00 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/04/16 15:55:12 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_table	*prepare_table(int argc, char **argv);
 bool	valid_input(int argc, char **argv);
 int		philo_atoi(char *arg);
 
+long long int	actual_time(void);
 int		error_exit(const char *err_message, int exit_no);
 
 #endif
