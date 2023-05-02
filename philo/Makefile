@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 17:03:40 by hanmpark          #+#    #+#              #
-#    Updated: 2023/04/14 14:50:46 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/05/02 12:53:37 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,9 @@ SRC_PATH = ./src/
 SRC = ${addprefix ${SRC_PATH}, main.c \
 								parse_input.c \
 								prepare_table.c \
+								routine.c \
+								sim_manage.c \
+								time_utils.c \
 								utils.c}
 
 OBJ = ${SRC:.c=.o}

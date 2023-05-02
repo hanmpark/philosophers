@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 17:15:33 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/04/16 15:55:12 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/02 14:24:51 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@
 for the program to work\n"
 # define ERR_INIT_PHILO "Error\nA problem occurred when trying to initialize \
 philosophers\n"
+# define ERR_INIT_DINING "Error\nA problem occurred when trying to initialize \
+the simulation\n"
+
+# define RED "\033[38;5;197m"
+# define GREEN "\033[38;5;190m"
+# define YELLOW "\033[38;5;220m"
+# define ORANGE "\033[38;5;208m"
+# define DEF "\033[0m"
 
 typedef struct s_philo
 {
@@ -55,20 +63,26 @@ typedef struct s_table
 	t_philo			*philo;
 }	t_table;
 
-typedef enum e_state
+typedef enum e_status
 {
 	DEAD,
 	ALIVE,
 	EATING,
 	SLEEPING,
 	THINKING
-}	t_state;
+}	t_status;
 
 t_table	*prepare_table(int argc, char **argv);
 bool	valid_input(int argc, char **argv);
 int		philo_atoi(char *arg);
 
-long long int	actual_time(void);
+time_t	actual_time(void);
+void	wait_time(time_t wait);
 int		error_exit(const char *err_message, int exit_no);
+bool	start_sim(t_table *table);
+void	*philo_routine(t_philo *philo);
+void	wait_start_time(time_t start_time);
+void	*supervise_sim(t_table *table);
+void	print_status(t_philo *philo, t_status status);
 
 #endif
