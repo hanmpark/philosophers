@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 17:15:23 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/02 13:47:09 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/03 13:51:29 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int	main(int argc, char **argv)
 		return (error_exit(ERR_INIT_PHILO, EXIT_FAILURE));
 	if (start_sim(table) == false)
 		return (error_exit(ERR_INIT_DINING, EXIT_FAILURE));
-	return (0);
+	stop_sim(table);
+	return (EXIT_SUCCESS);
 }

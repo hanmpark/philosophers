@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 16:33:47 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/02 14:25:01 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:58:55 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	ft_putstr_fd(const char *str, int fd)
 {
 	while (*str)
-		write(fd, *str++, 1);
+		write(fd, &*str++, 1);
 }
 
 int	error_exit(const char *err_message, int exit_no)
@@ -27,8 +27,16 @@ int	error_exit(const char *err_message, int exit_no)
 void	print_status(t_philo *philo, t_status status)
 {
 	pthread_mutex_lock(&philo->table->print);
+	if (sim_has_ended(philo) == true)
+	{
+		pthread_mutex_unlock(&philo->table->print);
+		return ;
+	}
 	if (status == DEAD)
 		printf(RED"%ld %d died\n"DEF, \
+		actual_time() - philo->table->start_time, philo->id);
+	else if (status == FORK)
+		printf(GREEN"%ld %d has taken a fork\n"DEF, \
 		actual_time() - philo->table->start_time, philo->id);
 	else if (status == EATING)
 		printf(GREEN"%ld %d is eating\n"DEF, \

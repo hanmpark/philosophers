@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 17:15:33 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/02 14:24:51 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/03 14:26:37 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	unsigned int	id;
-	unsigned int	times_eat;
-	pthread_mutex_t	eating;
+	int				times_eat;
 	time_t			last_eat;
+	pthread_mutex_t	meal_lock;
 	struct s_table	*table;
 }	t_philo;
 
 typedef struct s_table
 {
 	unsigned int	number_of_philo;
-	int				dine_left;
+	int				number_of_meals;
 	bool			end_sim;
 	time_t			start_time;
 	time_t			time_to_die;
@@ -67,6 +67,7 @@ typedef enum e_status
 {
 	DEAD,
 	ALIVE,
+	FORK,
 	EATING,
 	SLEEPING,
 	THINKING
@@ -80,9 +81,11 @@ time_t	actual_time(void);
 void	wait_time(time_t wait);
 int		error_exit(const char *err_message, int exit_no);
 bool	start_sim(t_table *table);
-void	*philo_routine(t_philo *philo);
+void	*philo_routine(void *arg);
 void	wait_start_time(time_t start_time);
-void	*supervise_sim(t_table *table);
+void	*sim_supervise(void *arg);
 void	print_status(t_philo *philo, t_status status);
+void	stop_sim(t_table *table);
+bool	sim_has_ended(t_philo *philo);
 
 #endif

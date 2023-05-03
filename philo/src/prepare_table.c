@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 14:12:54 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/04/13 16:55:21 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/03 13:21:56 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,32 @@
 // Install philosophers to the table and initialize their variables
 static t_philo	*install_philos(t_table *table)
 {
-	t_philo	*philosophers;
-	int		i;
+	t_philo			*philo;
+	unsigned int	i;
 
-	philosophers = malloc(table->number_of_philo * sizeof(t_philo));
-	if (!philosophers)
+	philo = malloc(table->number_of_philo * sizeof(t_philo));
+	if (!philo)
 		return (NULL);
 	i = 0;
 	while (i < table->number_of_philo)
 	{
-		if (pthread_mutex_init(&philosophers[i].eating, NULL) != 0)
+		if (pthread_mutex_init(&philo[i].meal_lock, NULL) != 0)
 		{
-			free(philosophers);
+			free(philo);
 			return (NULL);
 		}
-		philosophers[i].id = i + 1;
-		philosophers[i].times_eat = 0;
-		philosophers[i].table = table;
+		philo[i].id = i + 1;
+		philo[i].times_eat = 0;
+		philo[i].table = table;
 		i++;
 	}
-	return (philosophers);
+	return (philo);
 }
 
 // Initialize forks (mutexes)
 static bool	init_forks(t_table *table)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	table->fork = malloc(table->number_of_philo * sizeof(pthread_mutex_t));
@@ -77,9 +77,9 @@ static void	set_rules(t_table *table, int argc, char **argv)
 	table->time_to_die = philo_atoi(argv[2]);
 	table->time_to_eat = philo_atoi(argv[3]);
 	table->time_to_sleep = philo_atoi(argv[4]);
-	table->dine_left = -1;
+	table->number_of_meals = -1;
 	if (argc == 6)
-		table->dine_left = philo_atoi(argv[6]);
+		table->number_of_meals = philo_atoi(argv[6]);
 	table->end_sim = false;
 }
 

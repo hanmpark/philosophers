@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 17:03:40 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/02 12:53:37 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/05/03 13:19:04 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC = ${addprefix ${SRC_PATH}, main.c \
 								prepare_table.c \
 								routine.c \
 								sim_manage.c \
+								sim_supervise.c \
 								time_utils.c \
 								utils.c}
 

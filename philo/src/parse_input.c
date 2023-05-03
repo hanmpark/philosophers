@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 14:15:26 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/04/13 14:56:06 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/03 13:19:57 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ bool	valid_input(int argc, char **argv)
 			return (error_exit(ERR_ARGS_INCORRECT, false));
 		i++;
 	}
+	return (true);
 }
