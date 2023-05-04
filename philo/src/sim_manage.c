@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 14:51:20 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/04 14:05:40 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:26:18 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ bool	start_sim(t_table *table)
 		if (pthread_create(&table->philo[i].thread, NULL, &philo_routine, \
 			&table->philo[i]) != 0)
 			return (false);
+		usleep(15);
 		i++;
 	}
 	if (pthread_create(&table->watcher, NULL, &sim_supervise, table) != 0)

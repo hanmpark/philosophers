@@ -6,17 +6,11 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:53:06 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/04 13:54:55 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:20:48 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	wait_start_time(time_t start_time)
-{
-	while (actual_time() < start_time)
-		usleep(10);
-}
 
 time_t	actual_time(void)
 {
@@ -35,6 +29,6 @@ void	wait_time(t_philo *philo, time_t wait)
 	{
 		if (sim_has_ended(philo) == true)
 			break ;
-		usleep(50);
+		usleep(100);
 	}
 }

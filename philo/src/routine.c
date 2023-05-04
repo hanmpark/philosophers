@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:20:16 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/04 14:03:30 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:15:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static void	philo_eat(t_philo *philo)
 	print_status(philo, EATING);
 	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_eat = actual_time();
-	if (sim_has_ended(philo) == false)
-		philo->times_eat++;
+	philo->times_eat++;
 	pthread_mutex_unlock(&philo->meal_lock);
 	wait_time(philo, philo->table->time_to_eat);
 	pthread_mutex_unlock(&philo->table->fork[philo->id - 1]);
@@ -44,7 +43,6 @@ void	*philo_routine(void	*arg)
 	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_eat = philo->table->start_time;
 	pthread_mutex_unlock(&philo->meal_lock);
-	// wait_start_time(philo->table->start_time);
 	if (philo->id % 2 != 0)
 	{
 		print_status(philo, THINKING);

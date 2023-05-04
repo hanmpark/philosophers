@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 17:15:33 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/04 10:19:19 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:15:34 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ philosophers\n"
 the simulation\n"
 
 # define RED "\033[38;5;197m"
+# define PURPLE "\033[38;5;129m"
 # define GREEN "\033[38;5;190m"
 # define YELLOW "\033[38;5;220m"
 # define ORANGE "\033[38;5;208m"
@@ -82,7 +83,6 @@ void	wait_time(t_philo *philo, time_t wait);
 int		error_exit(const char *err_message, int exit_no);
 bool	start_sim(t_table *table);
 void	*philo_routine(void *arg);
-void	wait_start_time(time_t start_time);
 void	*sim_supervise(void *arg);
 void	print_status(t_philo *philo, t_status status);
 void	stop_sim(t_table *table);

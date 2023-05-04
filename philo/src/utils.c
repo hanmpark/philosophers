@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 16:33:47 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/04 13:48:20 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:15:17 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	print_status(t_philo *philo, t_status status)
 		printf(GREEN"%ld %d has taken a fork\n"DEF, \
 		actual_time() - philo->table->start_time, philo->id);
 	else if (status == EATING)
-		printf(GREEN"%ld %d is eating\n"DEF, \
+		printf(PURPLE"%ld %d is eating\n"DEF, \
 		actual_time() - philo->table->start_time, philo->id);
 	else if (status == SLEEPING)
 		printf(YELLOW"%ld %d is sleeping\n"DEF, \

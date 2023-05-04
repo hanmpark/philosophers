@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:45:28 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/04 14:03:34 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:41:17 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static bool	end_condition_reached(t_table *table)
 		if (table->number_of_meals > 0 && \
 			table->philo[i].times_eat >= table->number_of_meals)
 			fulfilled_meals_philo++;
+		// printf("fulfilled %u\n", fulfilled_meals_philo);
 		pthread_mutex_unlock(&table->philo[i].meal_lock);
 		i++;
 	}
@@ -73,7 +74,6 @@ void	*sim_supervise(void *arg)
 	if (table->number_of_meals == 0)
 		return (NULL);
 	set_sim_bool(table, false);
-	// wait_start_time(table->start_time);
 	while (true)
 	{
 		if (end_condition_reached(table) == true)
