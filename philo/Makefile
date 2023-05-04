@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 17:03:40 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/03 13:19:04 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/05/04 13:44:39 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ all: ${NAME}
 
 ${NAME}: ${OBJ}
 	@echo ""
-	@${CC} ${CFLAGS} ${PTHREAD} ${OBJ} -o ${NAME}
+	${CC} ${CFLAGS} ${PTHREAD} ${OBJ} -o ${NAME}
 	@echo "\n\n\n   ${BOLD}${CUR}${LYELLOW}PHILO COMPILED ✨${DEF}\n"
 
 debug:

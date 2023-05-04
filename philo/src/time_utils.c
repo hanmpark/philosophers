@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:53:06 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/02 12:53:54 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:54:55 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,15 @@ time_t	actual_time(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-void	wait_time(time_t wait)
+void	wait_time(t_philo *philo, time_t wait)
 {
 	time_t	timemark;
 
 	timemark = actual_time();
 	while (actual_time() - timemark < wait)
-		usleep(100);
+	{
+		if (sim_has_ended(philo) == true)
+			break ;
+		usleep(50);
+	}
 }

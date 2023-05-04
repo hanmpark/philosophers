@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 14:51:20 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/03 14:51:49 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:05:40 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool	start_sim(t_table *table)
 	unsigned int	i;
 
 	i = 0;
-	table->start_time = actual_time() + (table->number_of_philo * 20);
+	table->start_time = actual_time();
 	while (i < table->number_of_philo)
 	{
 		if (pthread_create(&table->philo[i].thread, NULL, &philo_routine, \
@@ -33,14 +33,14 @@ bool	start_sim(t_table *table)
 
 bool	sim_has_ended(t_philo *philo)
 {
+	bool	has_ended;
+
+	has_ended = false;
 	pthread_mutex_lock(&philo->table->end_sim_lock);
 	if (philo->table->end_sim == true)
-	{
-		pthread_mutex_unlock(&philo->table->end_sim_lock);
-		return (true);
-	}
+		has_ended = true;
 	pthread_mutex_unlock(&philo->table->end_sim_lock);
-	return (false);
+	return (has_ended);
 }
 
 static void	destroy_mutex(t_table *table)
