@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sim_supervise.c                                    :+:      :+:    :+:   */
+/*   watcher.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:45:28 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/04 18:41:17 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:49:43 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include "print_status.h"
 
 // Sets the end_sim boolean
 static void	set_sim_bool(t_table *table, bool state)
@@ -28,8 +29,8 @@ static bool	healthy_philo(t_philo *philo)
 	timestamp = actual_time();
 	if (timestamp - philo->last_eat >= philo->table->time_to_die)
 	{
-		print_status(philo, DEAD);
 		set_sim_bool(philo->table, true);
+		print_status(philo, true, DEAD);
 		pthread_mutex_unlock(&philo->meal_lock);
 		return (false);
 	}
@@ -52,7 +53,6 @@ static bool	end_condition_reached(t_table *table)
 		if (table->number_of_meals > 0 && \
 			table->philo[i].times_eat >= table->number_of_meals)
 			fulfilled_meals_philo++;
-		// printf("fulfilled %u\n", fulfilled_meals_philo);
 		pthread_mutex_unlock(&table->philo[i].meal_lock);
 		i++;
 	}
@@ -65,13 +65,13 @@ static bool	end_condition_reached(t_table *table)
 	return (false);
 }
 
-// Watcher thread checking the simulation's state
-void	*sim_supervise(void *arg)
+// Checks the simulation's state when there is more than 1 philosopher
+void	*watcher(void *arg)
 {
 	t_table	*table;
 
 	table = (t_table *)arg;
-	if (table->number_of_meals == 0)
+	if (table->number_of_meals == 0 || table->number_of_philo < 1)
 		return (NULL);
 	set_sim_bool(table, false);
 	while (true)

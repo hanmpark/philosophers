@@ -6,12 +6,14 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 14:15:26 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/03 13:19:57 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:47:03 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include "table_tools.h"
 
+// Checks if the argument is strictly composed of digits
 static bool	check_digit(char *arg)
 {
 	int	i;
@@ -26,6 +28,7 @@ static bool	check_digit(char *arg)
 	return (true);
 }
 
+// Basically an atoi() that returns -1 if the argument is not an integer
 int	philo_atoi(char *arg)
 {
 	unsigned long int	nbr;
@@ -43,6 +46,7 @@ int	philo_atoi(char *arg)
 	return ((int)nbr);
 }
 
+// Checks if the arguments are valid inputs
 bool	valid_input(int argc, char **argv)
 {
 	int	i;
@@ -52,10 +56,10 @@ bool	valid_input(int argc, char **argv)
 	while (i < argc)
 	{
 		if (check_digit(argv[i]) == false)
-			return (error_exit(ERR_ARGS_DIGIT, false));
+			return (false);
 		nbr = philo_atoi(argv[i]);
-		if ((i == 1 && (nbr <= 0 || nbr > 250)) || (i > 1 && nbr == -1))
-			return (error_exit(ERR_ARGS_INCORRECT, false));
+		if ((i == 1 && nbr <= 0) || (i > 1 && nbr == -1))
+			return (false);
 		i++;
 	}
 	return (true);

@@ -1,75 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sim_manage.c                                       :+:      :+:    :+:   */
+/*   sim_switch.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 14:51:20 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/04 15:26:18 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:07:05 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include "table_tools.h"
 
-// Philosophers should eat sleep and think
+/* Launches the simulation:
+* - sets the simulation's start time
+* - creates threads representing philosophers
+* - if there is more than 1 philosopher, creates the watcher's thread
+*/
 bool	start_sim(t_table *table)
 {
 	unsigned int	i;
 
+	if (table->number_of_philo == 1)
+	{
+		if (pthread_create(&table->philo[0].thread, NULL, &lonely_routine, \
+			&table->philo[0]) != 0)
+			return (false);
+		return (true);
+	}
 	i = 0;
 	table->start_time = actual_time();
 	while (i < table->number_of_philo)
 	{
-		if (pthread_create(&table->philo[i].thread, NULL, &philo_routine, \
+		if (pthread_create(&table->philo[i].thread, NULL, &launch_routine, \
 			&table->philo[i]) != 0)
 			return (false);
-		usleep(15);
+		usleep(20);
 		i++;
 	}
-	if (pthread_create(&table->watcher, NULL, &sim_supervise, table) != 0)
+	if (pthread_create(&table->watcher, NULL, &watcher, table) != 0)
 		return (false);
 	return (true);
 }
 
-bool	sim_has_ended(t_philo *philo)
-{
-	bool	has_ended;
-
-	has_ended = false;
-	pthread_mutex_lock(&philo->table->end_sim_lock);
-	if (philo->table->end_sim == true)
-		has_ended = true;
-	pthread_mutex_unlock(&philo->table->end_sim_lock);
-	return (has_ended);
-}
-
-static void	destroy_mutex(t_table *table)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < table->number_of_philo)
-	{
-		pthread_mutex_destroy(&table->philo[i].meal_lock);
-		i++;
-	}
-	pthread_mutex_destroy(&table->end_sim_lock);
-	pthread_mutex_destroy(&table->print);
-}
-
-static void	clean_table(t_table *table)
-{
-	if (!table)
-		return ;
-	destroy_mutex(table);
-	if (table->fork != NULL)
-		free(table->fork);
-	if (table->philo != NULL)
-		free(table->philo);
-	free(table);
-}
-
+// Stops the simulation cleaning every thread created, mutexes and allocations
 void	stop_sim(t_table *table)
 {
 	unsigned int	i;

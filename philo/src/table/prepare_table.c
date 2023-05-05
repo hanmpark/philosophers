@@ -6,11 +6,12 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 14:12:54 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/04 18:44:24 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:42:42 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include "table_tools.h"
 
 // Install philosophers to the table and initialize their variables
 static t_philo	*install_philos(t_table *table)
@@ -79,8 +80,7 @@ static void	set_rules(t_table *table, int argc, char **argv)
 	table->time_to_sleep = philo_atoi(argv[4]);
 	table->number_of_meals = -1;
 	if (argc == 6)
-		table->number_of_meals = philo_atoi(argv[6]); // WTFFFFFF
-	printf("number_of_meals = %d\n", table->number_of_meals);
+		table->number_of_meals = philo_atoi(argv[5]);
 	table->end_sim = false;
 }
 

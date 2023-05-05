@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 17:03:40 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/04 13:44:39 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/05/05 16:15:43 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,23 +25,35 @@ LGREEN = \033[38;5;155m
 
 # ---------------------------- SOURCES / OBJECTS ----------------------------- #
 SRC_PATH = ./src/
-SRC = ${addprefix ${SRC_PATH}, main.c \
-								parse_input.c \
-								prepare_table.c \
-								routine.c \
-								sim_manage.c \
-								sim_supervise.c \
-								time_utils.c \
-								utils.c}
+
+SRC_TABLE_PATH = ${SRC_PATH}table/
+SRC_TABLE = ${addprefix ${SRC_TABLE_PATH}, parse_input.c prepare_table.c}
+
+SRC_SIMULATION_PATH = ${SRC_PATH}simulation/
+SRC_SIMULATION = ${addprefix ${SRC_SIMULATION_PATH}, philosophers.c \
+														sim_manage.c \
+														sim_switch.c \
+														watcher.c}
+
+SRC_TOOLS_PATH = ${SRC_PATH}tools/
+SRC_TOOLS = ${addprefix ${SRC_TOOLS_PATH}, print.c time.c}
+
+SRC = ${SRC_TABLE} ${SRC_SIMULATION} ${SRC_TOOLS} ${SRC_PATH}main.c
 
 OBJ = ${SRC:.c=.o}
 
 # --------------------------------- COMPILER --------------------------------- #
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
+
 ifdef DEBUG
 	CFLAGS += -fsanitize=address -g
 endif
+
+ifdef THREAD
+	CFLAGS += -fsanitize=thread -g
+endif
+
 PTHREAD = -lpthread
 
 HEADER_PATH = ./inc/
@@ -65,11 +77,14 @@ all: ${NAME}
 
 ${NAME}: ${OBJ}
 	@echo ""
-	${CC} ${CFLAGS} ${PTHREAD} ${OBJ} -o ${NAME}
+	@${CC} ${CFLAGS} ${PTHREAD} ${OBJ} -o ${NAME}
 	@echo "\n\n\n   ${BOLD}${CUR}${LYELLOW}PHILO COMPILED ✨${DEF}\n"
 
 debug:
 	@${MAKE} DEBUG=1
+
+thread:
+	@${MAKE} THREAD=1
 
 clean:
 	@rm -f ${OBJ}
@@ -83,4 +98,4 @@ fclean: clean
 re: fclean
 	@${MAKE} all
 
-.PHONY: all clean fclean re debug
+.PHONY: all clean fclean re debug race

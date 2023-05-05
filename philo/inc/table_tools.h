@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   table_tools.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/08 17:15:23 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/05 16:50:00 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/05/05 16:31:31 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/05/05 16:38:23 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
-#include "table_tools.h"
-#include "errors.h"
+#ifndef TABLE_TOOLS_H
+# define TABLE_TOOLS_H
 
-int	main(int argc, char **argv)
-{
-	t_table	*table;
+# include <limits.h>
 
-	table = NULL;
-	if (argc < 5 || argc > 6)
-		return (error_exit(ERR_ARGS_NBR));
-	table = prepare_table(argc, argv);
-	if (!table)
-		return (error_exit(ERR_INIT_PHILO));
-	if (start_sim(table) == false)
-		return (error_exit(ERR_INIT_SIM));
-	stop_sim(table);
-	return (EXIT_SUCCESS);
-}
+bool	valid_input(int argc, char **argv);
+int		philo_atoi(char *arg);
+void	clean_table(t_table *table);
+t_table	*prepare_table(int argc, char **argv);
+
+#endif
