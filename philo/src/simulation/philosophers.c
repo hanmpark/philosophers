@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:20:16 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/06 16:59:25 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/06 19:11:36 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ void	*lonely_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	pthread_mutex_lock(&philo->meal_lock);
+	philo->last_eat = philo->table->start_time;
+	pthread_mutex_unlock(&philo->meal_lock);
 	pthread_mutex_lock(&philo->table->fork[0]);
 	print_status(philo, false, FORK);
 	wait_time(philo->table->time_to_die);

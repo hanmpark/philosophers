@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 14:51:20 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/06 17:16:54 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/06 19:15:51 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ bool	start_sim(t_table *table)
 {
 	unsigned int	i;
 
+	table->start_time = actual_time();
 	if (table->number_of_philo == 1)
 	{
 		if (pthread_create(&table->philo[0].thread, NULL, &lonely_routine, \
@@ -30,7 +31,6 @@ bool	start_sim(t_table *table)
 		return (true);
 	}
 	i = 0;
-	table->start_time = actual_time();
 	while (i < table->number_of_philo)
 	{
 		if (pthread_create(&table->philo[i].thread, NULL, &launch_routine, \
