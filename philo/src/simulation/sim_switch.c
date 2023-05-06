@@ -6,11 +6,11 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 14:51:20 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/05 17:07:05 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/06 17:16:54 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "simulation.h"
 #include "table_tools.h"
 
 /* Launches the simulation:
@@ -45,17 +45,24 @@ bool	start_sim(t_table *table)
 }
 
 // Stops the simulation cleaning every thread created, mutexes and allocations
-void	stop_sim(t_table *table)
+bool	stop_sim(t_table *table)
 {
 	unsigned int	i;
+	bool			clear_end;
 
 	i = 0;
+	clear_end = true;
 	while (i < table->number_of_philo)
 	{
-		pthread_join(table->philo[i].thread, NULL);
+		if (pthread_join(table->philo[i].thread, NULL) != 0)
+			clear_end = false;
 		i++;
 	}
 	if (table->number_of_philo > 1)
-		pthread_join(table->watcher, NULL);
+	{
+		if (pthread_join(table->watcher, NULL) != 0)
+			clear_end = false;
+	}
 	clean_table(table);
+	return (clear_end);
 }

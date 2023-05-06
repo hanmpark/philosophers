@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   simulation.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 17:15:33 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/05 16:49:19 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/06 17:07:56 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#ifndef SIMULATION_H
+# define SIMULATION_H
 
 # include <stdlib.h>
 # include <sys/time.h>
@@ -42,7 +42,7 @@ typedef struct s_table
 	pthread_mutex_t	end_sim_lock;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*fork;
-	t_philo			*philo;
+	struct s_philo	*philo;
 }	t_table;
 
 /* time related functions */
@@ -51,7 +51,7 @@ void	wait_time(time_t wait);
 
 /* simulation management */
 bool	start_sim(t_table *table);
-void	stop_sim(t_table *table);
+bool	stop_sim(t_table *table);
 bool	sim_has_ended(t_philo *philo);
 
 /* routines */

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prepare_table.c                                    :+:      :+:    :+:   */
+/*   prepare_table_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 14:12:54 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/06 16:59:57 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/06 17:21:09 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "simulation.h"
-#include "table_tools.h"
+#include "simulation_bonus.h"
+#include "table_tools_bonus.h"
 
 // Install philosophers to the table and initialize their variables
 static t_philo	*install_philos(t_table *table)

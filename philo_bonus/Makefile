@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/04/08 17:03:40 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/06 17:10:50 by hanmpark         ###   ########.fr        #
+#    Created: 2023/05/06 17:10:31 by hanmpark          #+#    #+#              #
+#    Updated: 2023/05/06 17:19:51 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LGREEN = \033[38;5;155m
 SRC_PATH = ./src/
 
 SRC_TABLE_PATH = ${SRC_PATH}table/
-SRC_TABLE = ${addprefix ${SRC_TABLE_PATH}, parse_input.c prepare_table.c}
+SRC_TABLE = ${addprefix ${SRC_TABLE_PATH}, parse_input_bonus.c prepare_table_bonus.c}
 
 SRC_SIMULATION_PATH = ${SRC_PATH}simulation/
 SRC_SIMULATION = ${addprefix ${SRC_SIMULATION_PATH}, philosophers.c \

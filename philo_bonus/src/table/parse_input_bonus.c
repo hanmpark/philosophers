@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_input.c                                      :+:      :+:    :+:   */
+/*   parse_input_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 14:15:26 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/06 16:59:49 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/06 17:19:35 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "simulation.h"
-#include "table_tools.h"
+#include "simulation_bonus.h"
+#include "table_tools_bonus.h"
 
 // Checks if the argument is strictly composed of digits
 static bool	check_digit(char *arg)

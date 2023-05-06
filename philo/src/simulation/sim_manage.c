@@ -6,11 +6,11 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:36:37 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/05 15:40:45 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/06 16:59:31 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "simulation.h"
 
 // Checks if the simulation has ended or not
 bool	sim_has_ended(t_philo *philo)

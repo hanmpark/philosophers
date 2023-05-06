@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:25:33 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/05 16:28:12 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/06 17:23:27 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 typedef enum e_status
 {
 	DEAD,
-	ALIVE,
 	FORK,
 	EATING,
 	SLEEPING,
