@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 17:15:33 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/06 17:07:56 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/09 13:58:29 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ bool	sim_has_ended(t_philo *philo);
 void	*launch_routine(void *arg);
 void	*lonely_routine(void *arg);
 void	*watcher(void *arg);
+
 
 #endif
