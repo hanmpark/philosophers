@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_errors.c                                    :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 10:23:50 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/09 13:05:10 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/05/10 14:27:22 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/05/10 15:53:37 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "simulation.h"
+#include "errors.h"
+#include <unistd.h>
 
-bool	bool_error(const char *message, void *fork, void *philo)
+void	putstr_error(char *message)
 {
-	if (fork)
-		free(fork);
-	if (philo)
-		free(philo);
 	while (*message)
 		write(2, &*message++, sizeof(char));
-	return (false);
 }
 
-void	*pointer_error(const char *message)
+bool	msg_error(char *message, t_table *table, int nbr_lock, int nbr_fork)
 {
-	while (*message)
-		write(2, &*message++, sizeof(char));
-	return (NULL);
+	clean_table(table, nbr_lock, nbr_fork);
+	putstr_error(message);
+	return (false);
 }

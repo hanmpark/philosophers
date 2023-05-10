@@ -6,11 +6,13 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:59:59 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/09 14:22:39 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:54:59 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "simulation.h"
+#include "status.h"
+#include "timer.h"
 
 time_t	give_actual_time(void)
 {
@@ -26,6 +28,12 @@ void	wait_until_start(time_t start)
 		usleep(100);
 }
 
+/* Waits for the given time in ms:
+* - usleep() is not as precise as it should be
+* - waits for wait_time in ms by using small intervals of usleep() call
+*	for precision's sake
+* - does not wait the end_sim flag is set to true during the loop
+*/
 void	*philo_wait(t_table *table, t_status status)
 {
 	time_t	timestamp;

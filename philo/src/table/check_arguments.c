@@ -6,13 +6,13 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:29:18 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/09 14:47:19 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:50:28 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "simulation.h"
+#include "errors.h"
 #include <limits.h>
-#include <stdio.h>
 
 int	philo_atoi(char *arg)
 {
@@ -33,17 +33,21 @@ int	philo_atoi(char *arg)
 	return ((int)number);
 }
 
+/* Parses the arguments:
+* - number of arguments
+* - should be positive integers
+*/
 bool	check_arguments(int argc, char **argv)
 {
 	int	i;
 
 	if (argc < 5 || argc > 6)
-		return (bool_error(ERR_ARGS, NULL, NULL));
+		return (msg_error(ERR_ARGS, NULL, 0, 0));
 	i = 1;
 	while (i < argc)
 	{
 		if (philo_atoi(argv[i]) == -1)
-			return (bool_error(ERR_FORMAT, NULL, NULL));
+			return (msg_error(ERR_FORMAT, NULL, 0, 0));
 		i++;
 	}
 	return (true);

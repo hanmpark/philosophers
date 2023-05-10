@@ -5,15 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/02 13:45:28 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/06 16:59:43 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/05/09 13:07:06 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/05/10 14:42:31 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation.h"
-#include "print_status.h"
 
-// Sets the end_sim boolean
 static void	set_sim_bool(t_table *table, bool state)
 {
 	pthread_mutex_lock(&table->end_sim_lock);
@@ -21,43 +19,40 @@ static void	set_sim_bool(t_table *table, bool state)
 	pthread_mutex_unlock(&table->end_sim_lock);
 }
 
-// Checks wether the philosopher is dead or alive
 static bool	healthy_philo(t_philo *philo)
 {
 	time_t	timestamp;
 
-	timestamp = actual_time();
-	if (timestamp - philo->last_eat >= philo->table->time_to_die)
+	timestamp = give_actual_time();
+	if (timestamp - philo->last_meal >= philo->table->tm_starve)
 	{
 		set_sim_bool(philo->table, true);
 		print_status(philo, true, DEAD);
-		pthread_mutex_unlock(&philo->meal_lock);
+		pthread_mutex_unlock(&philo->philo_lock);
 		return (false);
 	}
 	return (true);
 }
 
-// Checks if the simulation has reached an end condition
 static bool	end_condition_reached(t_table *table)
 {
 	unsigned int	i;
-	unsigned int	fulfilled_meals_philo;
+	unsigned int	fulfilled_meals;
 
 	i = 0;
-	fulfilled_meals_philo = 0;
-	while (i < table->number_of_philo)
+	fulfilled_meals = 0;
+	while (i < table->nbr_philo)
 	{
-		pthread_mutex_lock(&table->philo[i].meal_lock);
+		pthread_mutex_lock(&table->philo[i].philo_lock);
 		if (healthy_philo(&table->philo[i]) == false)
 			return (true);
-		if (table->number_of_meals > 0 && \
-			table->philo[i].times_eat >= table->number_of_meals)
-			fulfilled_meals_philo++;
-		pthread_mutex_unlock(&table->philo[i].meal_lock);
+		if (table->nbr_meals > 0 && \
+			table->philo[i].times_ate >= table->nbr_meals)
+			fulfilled_meals++;
+		pthread_mutex_unlock(&table->philo[i].philo_lock);
 		i++;
 	}
-	if (table->number_of_meals > 0 && \
-		fulfilled_meals_philo == table->number_of_philo)
+	if (table->nbr_meals > 0 && fulfilled_meals == table->nbr_philo)
 	{
 		set_sim_bool(table, true);
 		return (true);
@@ -65,16 +60,34 @@ static bool	end_condition_reached(t_table *table)
 	return (false);
 }
 
-// Checks the simulation's state when there is more than 1 philosopher
-void	*watcher(void *arg)
+bool	end_simulation(t_table *table)
+{
+	bool	end;
+
+	end = false;
+	pthread_mutex_lock(&table->end_sim_lock);
+	if (table->end_sim == true)
+		end = true;
+	pthread_mutex_unlock(&table->end_sim_lock);
+	return (end);
+}
+
+/* Watcher's thread:
+* - waits for all other threads to be initialized
+* - supervise philosophers
+* - checks tm_starve
+* - checks nbr_meals
+* - if an end condition is encountered, set end_sim to true
+*/
+void	*watcher(void *data)
 {
 	t_table	*table;
 
-	table = (t_table *)arg;
-	if (table->number_of_meals == 0 || table->number_of_philo < 1)
+	table = (t_table *)data;
+	if (table->nbr_meals == 0)
 		return (NULL);
-	set_sim_bool(table, false);
-	while (true)
+	wait_until_start(table->tm_start);
+	while ("Philosophers are annoying")
 	{
 		if (end_condition_reached(table) == true)
 			return (NULL);

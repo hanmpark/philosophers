@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   timer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/02 12:53:06 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/06 17:00:09 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/05/10 14:38:04 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/05/10 14:39:57 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "simulation.h"
+#ifndef TIMER_H
+# define TIMER_H
 
-// Returns the actual time in milliseconds
-time_t	actual_time(void)
-{
-	struct timeval	tv;
+# include <sys/time.h>
+# include <unistd.h>
 
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
+time_t	give_actual_time(void);
+void	wait_until_start(time_t start);
+void	*philo_wait(t_table *table, t_status status);
 
-// Waits 'wait' milliseconds
-void	wait_time(time_t wait)
-{
-	time_t	timemark;
-
-	timemark = actual_time();
-	while (actual_time() - timemark < wait)
-		usleep(50);
-}
+#endif

@@ -6,12 +6,11 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:17:19 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/09 14:48:26 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:51:03 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-#include <string.h>
+#include "simulation.h"
 
 static void	set_rules(t_table *table, int argc, char **argv)
 {

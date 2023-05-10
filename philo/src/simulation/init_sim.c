@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   init_sim.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 10:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/09 15:41:54 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/05/10 13:35:33 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/05/10 15:09:49 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-#include <string.h>
+#include "simulation.h"
+#include "errors.h"
+#include "timer.h"
 
+/* Initializes threads:
+* - each thread represents a philosopher
+* - if there is more than 1 philosopher, initialize the watcher's thread
+*/
 bool	start_simulation(t_table *table)
 {
 	unsigned int	i;
@@ -23,44 +28,21 @@ bool	start_simulation(t_table *table)
 	{
 		if (pthread_create(&table->philo[i].thread, NULL, &launch_routine, \
 			&table->philo[i]) != 0)
-			return (false);
+			return (bool_error(ERR_THREAD, table->fork, table->philo));
 		i++;
 	}
 	if (table->nbr_philo > 1)
-	{
 		if (pthread_create(&table->watcher, NULL, &watcher, table) != 0)
-			return (false);
-	}
+			return (bool_error(ERR_THREAD, table->fork, table->philo));
 	return (true);
 }
 
-static void	destroy_mutex(t_table *table)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < table->nbr_philo)
-	{
-		pthread_mutex_destroy(&table->philo[i].philo_lock);
-		i++;
-	}
-	pthread_mutex_destroy(&table->end_sim_lock);
-	pthread_mutex_destroy(&table->print);
-}
-
-// Destroy mutexes and free the allocations
-void	clean_table(t_table *table)
-{
-	if (!table)
-		return ;
-	destroy_mutex(table);
-	if (table->fork != NULL)
-		free(table->fork);
-	if (table->philo != NULL)
-		free(table->philo);
-	free(table);
-}
-
+/* Joins threads and end the simulation:
+* - joins all the philosophers' thread
+* - joins the watcher's thread if it exists
+* - destroys the mutexes
+* - frees the allocated pointers
+*/
 bool	stop_simulation(t_table *table)
 {
 	unsigned int	i;
@@ -75,24 +57,10 @@ bool	stop_simulation(t_table *table)
 		i++;
 	}
 	if (table->nbr_philo > 1)
-	{
 		if (pthread_join(table->watcher, NULL) != 0)
 			clear_end = false;
-	}
-	clean_table(table);
+	clean_table(table, true);
+	if (clear_end == false)
+		return (bool_error(ERR_JOIN, NULL, NULL));
 	return (clear_end);
-}
-
-int	main(int argc, char **argv)
-{
-	t_table	*table;
-
-	table = NULL;
-	table = init_table(argc, argv);
-	if (!table)
-		return (EXIT_FAILURE);
-	if (start_simulation(table) == false)
-		return (EXIT_FAILURE);
-	stop_simulation(table);
-	return (EXIT_SUCCESS);
 }

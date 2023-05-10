@@ -6,37 +6,13 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 12:58:53 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/09 15:43:28 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:55:18 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-#include <stdio.h>
-
-void	*print_status(t_philo *philo, bool last, t_status status)
-{
-	time_t	timestamp;
-
-	pthread_mutex_lock(&philo->table->print);
-	if (end_simulation(philo->table) == true && last == false)
-	{
-		pthread_mutex_unlock(&philo->table->print);
-		return (NULL);
-	}
-	timestamp = give_actual_time() - philo->table->tm_start;
-	if (status == DEAD)
-		printf("%ld %d died\n", timestamp, philo->id);
-	if (status == FORK)
-		printf("%ld %d has taken a fork\n", timestamp, philo->id);
-	if (status == EAT)
-		printf("%ld %d is eating\n", timestamp, philo->id);
-	if (status == SLEEP)
-		printf("%ld %d is sleeping\n", timestamp, philo->id);
-	if (status == THINK)
-		printf("%ld %d is thinking\n", timestamp, philo->id);
-	pthread_mutex_unlock(&philo->table->print);
-	return (NULL);
-}
+#include "simulation.h"
+#include "status.h"
+#include "timer.h"
 
 static void	take_forks(t_philo *philo)
 {
@@ -74,6 +50,11 @@ static void	lonely_routine(t_philo *philo)
 	pthread_mutex_unlock(&philo->table->fork[0]);
 }
 
+/* Launches a routine:
+* - before launching any routine, waits for all other threads to start together
+* - if there is 1 philosopher, launches the routine for 1 philosopher
+* - else launches the basic routine (eat, sleep and think)
+*/
 void	*launch_routine(void *data)
 {
 	t_philo	*philo;

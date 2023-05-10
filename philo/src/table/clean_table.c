@@ -1,50 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sim_manage.c                                       :+:      :+:    :+:   */
+/*   clean_table.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 15:36:37 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/06 16:59:31 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/05/10 15:00:29 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/05/10 15:54:01 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation.h"
 
-// Checks if the simulation has ended or not
-bool	sim_has_ended(t_philo *philo)
+static void	destroy_mutexes(t_table *table, int nbr_lock, int nbr_fork)
 {
-	bool	has_ended;
+	int	i;
 
-	has_ended = false;
-	pthread_mutex_lock(&philo->table->end_sim_lock);
-	if (philo->table->end_sim == true)
-		has_ended = true;
-	pthread_mutex_unlock(&philo->table->end_sim_lock);
-	return (has_ended);
-}
-
-static void	destroy_mutex(t_table *table)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < table->number_of_philo)
-	{
-		pthread_mutex_destroy(&table->philo[i].meal_lock);
-		i++;
-	}
+	i = -1;
+	while (++i < nbr_lock)
+		pthread_mutex_destroy(&table->philo[i].philo_lock);
+	i = -1;
+	while (++i < nbr_fork)
+		pthread_mutex_destroy(&table->fork[i]);
 	pthread_mutex_destroy(&table->end_sim_lock);
 	pthread_mutex_destroy(&table->print);
 }
 
-// Destroy mutexes and free the allocations
-void	clean_table(t_table *table)
+void	clean_table(t_table *table, int nbr_lock, int nbr_fork)
 {
 	if (!table)
 		return ;
-	destroy_mutex(table);
+	destroy_mutexes(table, nbr_lock, nbr_fork);
 	if (table->fork != NULL)
 		free(table->fork);
 	if (table->philo != NULL)

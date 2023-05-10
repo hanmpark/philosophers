@@ -6,11 +6,12 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:33:38 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/09 14:15:18 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:49:37 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "simulation.h"
+#include "errors.h"
 
 bool	init_philosophers(t_table *table)
 {
