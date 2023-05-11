@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:38:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/10 14:39:57 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/11 13:29:40 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-time_t	give_actual_time(void);
+time_t	give_current_time(void);
 void	wait_until_start(time_t start);
 void	*philo_wait(t_table *table, t_status status);
 

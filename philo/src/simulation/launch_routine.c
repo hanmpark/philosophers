@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 12:58:53 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/10 14:55:18 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:32:10 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static void	take_forks(t_philo *philo)
 	print_status(philo, false, FORK);
 	print_status(philo, false, EAT);
 	pthread_mutex_lock(&philo->philo_lock);
-	philo->last_meal = give_actual_time();
-	philo->times_ate++;
+	philo->last_meal = give_current_time();
 	pthread_mutex_unlock(&philo->philo_lock);
+	philo->times_ate++;
 	philo_wait(philo->table, EAT);
 }
 
@@ -42,12 +42,10 @@ static void	lonely_routine(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->fork[0]);
 	print_status(philo, false, FORK);
-	philo_wait(philo->table, philo->table->tm_starve);
-	pthread_mutex_lock(&philo->table->end_sim_lock);
-	philo->table->end_sim = true;
-	pthread_mutex_unlock(&philo->table->end_sim_lock);
+	philo_wait(philo->table, DEAD);
 	print_status(philo, true, DEAD);
 	pthread_mutex_unlock(&philo->table->fork[0]);
+	philo->table->end_sim = true;
 }
 
 /* Launches a routine:
@@ -66,6 +64,8 @@ void	*launch_routine(void *data)
 	philo->last_meal = philo->table->tm_start;
 	pthread_mutex_unlock(&philo->philo_lock);
 	wait_until_start(philo->table->tm_start);
+	if (end_simulation(philo->table) == true)
+		return (NULL);
 	if (philo->table->nbr_philo == 1)
 		lonely_routine(philo);
 	else if (philo->id % 2 != 0)

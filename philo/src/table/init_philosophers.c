@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:33:38 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/10 14:49:37 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:38:19 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ bool	init_philosophers(t_table *table)
 
 	table->philo = malloc(table->nbr_philo * sizeof(t_philo));
 	if (!table->philo)
-		return (false);
+		table_error(ERR_PHILO, table, 0, table->nbr_philo);
 	i = 0;
 	while (i < table->nbr_philo)
 	{
 		if (pthread_mutex_init(&table->philo[i].philo_lock, NULL) != 0)
-			return (bool_error(ERR_PHILO, table->fork, table->philo));
+			return (table_error(ERR_PHILO, table, i, table->nbr_philo));
 		table->philo[i].id = i + 1;
 		table->philo[i].times_ate = 0;
 		table->philo[i].table = table;

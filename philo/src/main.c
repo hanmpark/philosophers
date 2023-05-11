@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/10 14:43:59 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:28:16 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (start_simulation(table) == false)
 		return (EXIT_FAILURE);
-	if (stop_simulation(table) == false)
-		return (EXIT_FAILURE);
+	stop_simulation(table);
 	return (EXIT_SUCCESS);
 }

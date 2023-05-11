@@ -6,24 +6,26 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:06 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/10 14:42:31 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:48:08 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation.h"
+#include "status.h"
+#include "timer.h"
 
-static void	set_sim_bool(t_table *table, bool state)
+void	set_sim_bool(t_table *table, bool state)
 {
-	pthread_mutex_lock(&table->end_sim_lock);
+	pthread_mutex_lock(&table->sim_lock);
 	table->end_sim = state;
-	pthread_mutex_unlock(&table->end_sim_lock);
+	pthread_mutex_unlock(&table->sim_lock);
 }
 
 static bool	healthy_philo(t_philo *philo)
 {
 	time_t	timestamp;
 
-	timestamp = give_actual_time();
+	timestamp = give_current_time();
 	if (timestamp - philo->last_meal >= philo->table->tm_starve)
 	{
 		set_sim_bool(philo->table, true);
@@ -65,10 +67,10 @@ bool	end_simulation(t_table *table)
 	bool	end;
 
 	end = false;
-	pthread_mutex_lock(&table->end_sim_lock);
+	pthread_mutex_lock(&table->sim_lock);
 	if (table->end_sim == true)
 		end = true;
-	pthread_mutex_unlock(&table->end_sim_lock);
+	pthread_mutex_unlock(&table->sim_lock);
 	return (end);
 }
 
