@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 17:00:52 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/06 17:13:46 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:10:10 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@ int	main(int argc, char **argv)
 
 	table = NULL;
 	if (argc < 5 || argc > 6)
-		return (error_exit(ERR_ARGS_NBR));
+		return (EXIT_FAILURE);
 	table = prepare_table(argc, argv);
 	if (!table)
-		return (error_exit(ERR_INIT_PHILO));
-	if (start_sim(table) == false)
-		return (error_exit(ERR_INIT_SIM));
-	if (stop_sim(table) == false)
-		return (error_exit(ERR_END_SIM));
+		return (EXIT_FAILURE);
+	if (start_simulation(table) == false)
+		return (EXIT_FAILURE);
+	stop_simulation(table);
 	return (EXIT_SUCCESS);
 }
