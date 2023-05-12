@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:58:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/06 17:08:18 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/12 15:06:42 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,32 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <semaphore.h>
+# include <pthread.h>
 # include <stdbool.h>
 
 typedef struct s_philo
 {
+	pthread_t		watcher;
+	time_t			last_meal;
 	unsigned int	id;
-	int				times_eat;
-	time_t			last_eat;
+	int				times_ate;
+	sem_t			times_sem;
+	sem_t			meal_sem;
 	struct s_table	*table;
 }	t_philo;
 
 typedef struct s_table
 {
-	unsigned int	number_of_philo;
-	int				number_of_meals;
+	unsigned int	nbr_philo;
+	int				nbr_meals;
 	bool			end_sim;
 	time_t			start_time;
-	time_t			time_to_die;
-	time_t			time_to_eat;
-	time_t			time_to_sleep;
-	sem_t			fork;
+	time_t			tm_starve;
+	time_t			tm_eat;
+	time_t			tm_sleep;
+	sem_t			fork_sem;
+	sem_t			print_sem;
+	sem_t			sim_sem;
 	struct s_philo	*philo;
 }	t_table;
 
