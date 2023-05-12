@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:33:58 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/11 15:41:11 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/12 11:21:02 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # define ERR_MUTEX "Error: A problem occurred while initializing a mutex\n"
 # define ERR_THREAD "Error: A problem occurred while creating threads\n"
 
-bool	table_error(char *msg, t_table *table, int nbr_lock, int nbr_fork);
-bool	thread_error(char *msg, t_table *table, int nbr_thread);
+bool	init_error(char *msg, t_table *table, bool mutex);
 
 #endif

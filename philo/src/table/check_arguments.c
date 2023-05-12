@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:29:18 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/11 13:56:40 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/12 11:22:39 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ bool	check_arguments(int argc, char **argv)
 	int	i;
 
 	if (argc < 5 || argc > 6)
-		return (table_error(ERR_ARGS, NULL, 0, 0));
+		return (init_error(ERR_ARGS, NULL, false));
 	i = 1;
 	while (i < argc)
 	{
 		if (philo_atoi(argv[i]) == -1)
-			return (table_error(ERR_FORMAT, NULL, 0, 0));
+			return (init_error(ERR_FORMAT, NULL, false));
 		i++;
 	}
 	return (true);

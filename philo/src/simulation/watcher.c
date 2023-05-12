@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:06 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/11 14:48:08 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/12 13:13:33 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ static bool	healthy_philo(t_philo *philo)
 	time_t	timestamp;
 
 	timestamp = give_current_time();
+	pthread_mutex_lock(&philo->meal_lock);
 	if (timestamp - philo->last_meal >= philo->table->tm_starve)
 	{
+		pthread_mutex_unlock(&philo->meal_lock);
 		set_sim_bool(philo->table, true);
 		print_status(philo, true, DEAD);
-		pthread_mutex_unlock(&philo->philo_lock);
 		return (false);
 	}
+	pthread_mutex_unlock(&philo->meal_lock);
 	return (true);
 }
 
@@ -45,13 +47,13 @@ static bool	end_condition_reached(t_table *table)
 	fulfilled_meals = 0;
 	while (i < table->nbr_philo)
 	{
-		pthread_mutex_lock(&table->philo[i].philo_lock);
 		if (healthy_philo(&table->philo[i]) == false)
 			return (true);
+		pthread_mutex_lock(&table->philo[i].times_lock);
 		if (table->nbr_meals > 0 && \
 			table->philo[i].times_ate >= table->nbr_meals)
 			fulfilled_meals++;
-		pthread_mutex_unlock(&table->philo[i].philo_lock);
+		pthread_mutex_unlock(&table->philo[i].times_lock);
 		i++;
 	}
 	if (table->nbr_meals > 0 && fulfilled_meals == table->nbr_philo)

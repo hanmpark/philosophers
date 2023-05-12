@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 12:58:53 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/11 15:32:10 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:19:12 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ static void	take_forks(t_philo *philo)
 	pthread_mutex_lock(&philo->table->fork[philo->id % philo->table->nbr_philo]);
 	print_status(philo, false, FORK);
 	print_status(philo, false, EAT);
-	pthread_mutex_lock(&philo->philo_lock);
+	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = give_current_time();
-	pthread_mutex_unlock(&philo->philo_lock);
+	pthread_mutex_unlock(&philo->meal_lock);
+	pthread_mutex_lock(&philo->times_lock);
 	philo->times_ate++;
+	pthread_mutex_unlock(&philo->times_lock);
 	philo_wait(philo->table, EAT);
 }
 
@@ -60,9 +62,9 @@ void	*launch_routine(void *data)
 	philo = (t_philo *)data;
 	if (philo->table->nbr_meals == 0 || philo->table->tm_starve == 0)
 		return (NULL);
-	pthread_mutex_lock(&philo->philo_lock);
+	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = philo->table->tm_start;
-	pthread_mutex_unlock(&philo->philo_lock);
+	pthread_mutex_unlock(&philo->meal_lock);
 	wait_until_start(philo->table->tm_start);
 	if (end_simulation(philo->table) == true)
 		return (NULL);

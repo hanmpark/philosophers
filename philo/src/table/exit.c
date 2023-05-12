@@ -1,41 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_table.c                                      :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 15:00:29 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/11 15:08:36 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/05/10 14:27:22 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/05/12 12:21:49 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation.h"
+#include "status.h"
 #include "errors.h"
+#include "timer.h"
 
-static void	destroy_mutexes(t_table *table, int nbr_lock, int nbr_fork)
+static void	putstr_error(char *msg)
 {
-	int	i;
+	while (*msg)
+		write(2, &*msg++, sizeof(char));
+}
 
-	i = -1;
-	while (++i < nbr_lock)
-		pthread_mutex_destroy(&table->philo[i].philo_lock);
-	i = -1;
-	while (++i < nbr_fork)
+static void	destroy_mutexes(t_table *table)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < table->nbr_philo)
+	{
+		pthread_mutex_destroy(&table->philo[i].meal_lock);
+		pthread_mutex_destroy(&table->philo[i].times_lock);
 		pthread_mutex_destroy(&table->fork[i]);
+		i++;
+	}
 	pthread_mutex_destroy(&table->sim_lock);
 	pthread_mutex_destroy(&table->print_lock);
 }
 
-void	clean_table(t_table *table, int nbr_lock, int nbr_fork)
+void	clean_table(t_table *table, bool mutex)
 {
 	if (!table)
 		return ;
-	if (nbr_lock != 0 || nbr_fork != 0)
-		destroy_mutexes(table, nbr_lock, nbr_fork);
+	if (mutex == true)
+		destroy_mutexes(table);
 	if (table->fork != NULL)
 		free(table->fork);
 	if (table->philo != NULL)
 		free(table->philo);
 	free(table);
+}
+
+bool	init_error(char *msg, t_table *table, bool mutex)
+{
+	if (table)
+		clean_table(table, mutex);
+	putstr_error(msg);
+	return (false);
 }

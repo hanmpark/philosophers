@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:32:52 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/11 15:15:14 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/12 11:46:16 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 typedef struct s_philo
 {
 	pthread_t		thread;
+	pthread_mutex_t	meal_lock;
+	pthread_mutex_t	times_lock;
 	time_t			last_meal;
 	unsigned int	id;
 	int				times_ate;
-	pthread_mutex_t	philo_lock;
 	struct s_table	*table;
 }	t_philo;
 
@@ -58,7 +59,7 @@ void	*watcher(void *data);
 bool	end_simulation(t_table *table);
 void	set_sim_bool(t_table *table, bool state);
 
-// FREES AND DESTROYS ALLOCATED POINTERS AND MUTEXES
-void	clean_table(t_table *table, int nbr_lock, int nbr_fork);
+// FREES ALLOCATED POINTERS
+void	clean_table(t_table *table, bool mutex);
 
 #endif
