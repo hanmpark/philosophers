@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 13:35:33 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/12 11:28:28 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/15 13:48:04 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 /* Initializes threads:
 * - each thread represents a philosopher
-* - if there is more than 1 philosopher, initialize the watcher's thread
+* - if there is more than 1 philosopher, initializes the watcher's thread
 */
 bool	start_simulation(t_table *table)
 {

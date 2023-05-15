@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_philosophers_bonus.c                          :+:      :+:    :+:   */
+/*   init_sim_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 13:46:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/15 13:56:21 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/05/15 13:46:57 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/05/15 13:55:02 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation_bonus.h"
+#include "errors_bonus.h"
 
-bool	init_philosophers(t_table *table)
+/* Initializes processes:
+* - each process represents a philosopher
+* - if there is more than 1 philosopher, initializes the watcher's thread
+*/
+bool	start_simulation(t_table *table)
 {
 	unsigned int	i;
+	pid_t			pid;
 
-	table->philo = malloc(table->nbr_philo * sizeof(t_philo));
-	if (!table->philo)
-		return (false);
+	table->tm_start = give_current_time() + (table->nbr_philo * 20);
 	i = 0;
 	while (i < table->nbr_philo)
 	{
-		table->philo[i].id = i + 1;
-		table->philo[i].times_ate = 0;
-		table->philo[i].table = table;
+		pid = fork();
+		if (pid == -1)
+			init_error(ERR_PHILO, table, true);
 		i++;
 	}
 }

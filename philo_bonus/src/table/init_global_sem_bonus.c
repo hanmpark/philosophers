@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:20:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/12 14:57:17 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/15 13:36:43 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@ bool	init_global_sem(t_table *table)
 		table->nbr_philo);
 	if (table->fork_sem == SEM_FAILED)
 		return (false);
-	table->print_sem = sem_open("/print_sem", O_CREAT, S_IRUSR | S_IWUSR, \
-		table->nbr_philo);
+	table->print_sem = sem_open("/print_sem", O_CREAT, S_IRUSR | S_IWUSR, 1);
 	if (table->print_sem == SEM_FAILED)
 		return (false);
-	table->sim_sem = sem_open("/sim_sem", O_CREAT, S_IRUSR | S_IWUSR, \
-		table->nbr_philo);
+	table->sim_sem = sem_open("/sim_sem", O_CREAT, S_IRUSR | S_IWUSR, 1);
 	if (table->sim_sem == SEM_FAILED)
 		return (false);
 	return (true);
