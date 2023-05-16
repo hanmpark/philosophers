@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:58:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/15 13:55:34 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:01:58 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 typedef struct s_philo
 {
 	time_t			last_meal;
+	pid_t			pid;
 	unsigned int	id;
 	int				times_ate;
 	struct s_table	*table;
@@ -42,5 +43,8 @@ typedef struct s_table
 	sem_t			sim_sem;
 	struct s_philo	*philo;
 }	t_table;
+
+bool	init_philosophers(t_table *table);
+void	*launch_routine(t_philo *philo);
 
 #endif

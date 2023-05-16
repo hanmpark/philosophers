@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:17:19 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/15 13:45:35 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:00:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_table	*init_table(int argc, char **argv)
 	if (!table)
 		return (NULL);
 	set_rules(table, argc, argv);
-	if (init_global_sem(table) == false)
+	if (init_global_sem(table) == false || init_philosophers(table) == false)
 		return (NULL);
 	return (table);
 }
