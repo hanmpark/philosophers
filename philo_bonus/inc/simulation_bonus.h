@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:58:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/16 19:01:58 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:15:21 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define SIMULATION_BONUS_H
 
 # include <stdlib.h>
-# include <sys/time.h>
-# include <unistd.h>
 # include <semaphore.h>
 # include <pthread.h>
 # include <stdbool.h>
@@ -26,6 +24,7 @@ typedef struct s_philo
 	pid_t			pid;
 	unsigned int	id;
 	int				times_ate;
+	pthread_t		hunger_watcher;
 	struct s_table	*table;
 }	t_philo;
 
@@ -41,10 +40,25 @@ typedef struct s_table
 	sem_t			fork_sem;
 	sem_t			print_sem;
 	sem_t			sim_sem;
+	sem_t			ate_enough;
+	pthread_t		limiter;
 	struct s_philo	*philo;
 }	t_table;
 
+/* INITIALIZATION */
+bool	check_arguments(int argc, char **argv);
+int		philo_atoi(char *arg);
+t_table	*init_table(int argc, char **argv);
+bool	init_global_sem(t_table *table);
 bool	init_philosophers(t_table *table);
+
+/* ROUTINE */
+bool	start_simulation(t_table *table);
 void	*launch_routine(t_philo *philo);
+void	*hunger_watcher(void *data);
+void	*limiter(t_table *table);
+
+/* EXIT */
+bool	init_error(char *msg, t_table *table, bool semaphore);
 
 #endif

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time_utils.c                                       :+:      :+:    :+:   */
+/*   time_utils_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 11:59:59 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/19 09:42:46 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/05/19 09:41:39 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/05/19 09:42:58 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "simulation.h"
-#include "status.h"
-#include "timer.h"
+#include "simulation_bonus.h"
+#include "status_bonus.h"
+#include "timer_bonus.h"
 
 time_t	give_current_time(void)
 {

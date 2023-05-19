@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 12:58:53 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/12 12:19:12 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/19 09:34:07 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static void	lonely_routine(t_philo *philo)
 }
 
 /* Launches a routine:
-* - before launching any routine, waits for all other threads to start together
+* - before launching any routine, waits for all other threads to be created
+	to start
 * - if there is 1 philosopher, launches the routine for 1 philosopher
 * - else launches the basic routine (eat, sleep and think)
 */

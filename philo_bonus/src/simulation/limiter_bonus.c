@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_philosophers_bonus.c                          :+:      :+:    :+:   */
+/*   limiter_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 13:46:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/19 09:21:37 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/05/19 16:05:20 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/05/19 17:02:13 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation_bonus.h"
-#include "errors_bonus.h"
+#include "status_bonus.h"
+#include "timer_bonus.h"
 
-bool	init_philosophers(t_table *table)
+void	*limiter(t_table *table)
 {
-	unsigned int	i;
+	int	fulfilled_meals;
 
-	table->philo = malloc(table->nbr_philo * sizeof(t_philo));
-	if (!table->philo)
-		return (init_error(ERR_PHILO, table, true));
-	i = 0;
-	while (i < table->nbr_philo)
+	if (table->nbr_philo < 2 && table->nbr_meals <= 0 || table->tm_starve == 0)
+		return (NULL);
+	wait_until_start(table->tm_start);
+	fulfilled_meals = 0;
+	while (fulfilled_meals < table->nbr_philo && table->end_sim == false)
 	{
-		table->philo[i].id = i + 1;
-		table->philo[i].times_ate = 0;
-		table->philo[i].table = table;
-		i++;
+		sem_wait(&table->ate_enough);
+		fulfilled_meals++;
 	}
+	sem_post(&table->sim_sem);
+	return (NULL);
 }
