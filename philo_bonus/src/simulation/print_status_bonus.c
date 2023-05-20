@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 09:37:35 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/19 14:05:12 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/20 16:38:32 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	*print_status(t_philo *philo, bool last, t_status status)
 {
 	time_t	timestamp;
 
-	sem_wait(&philo->table->print_sem);
-	if (end_simulation(philo->table) == true && last == false)
+	sem_wait(philo->table->print_sem);
+	if (last == false && )
 	{
-		sem_post(&philo->table->print_sem);
+		sem_post(philo->table->print_sem);
 		return (NULL);
 	}
 	timestamp = give_current_time() - philo->table->tm_start;
@@ -39,6 +39,6 @@ void	*print_status(t_philo *philo, bool last, t_status status)
 		printf("%ld %d is sleeping\n", timestamp, philo->id);
 	if (status == THINK)
 		printf("%ld %d is thinking\n", timestamp, philo->id);
-	sem_post(&philo->table->print_sem);
+	sem_post(philo->table->print_sem);
 	return (NULL);
 }

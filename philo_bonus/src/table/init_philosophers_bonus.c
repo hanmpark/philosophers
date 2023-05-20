@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:46:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/19 09:21:37 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/20 16:19:59 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,5 @@ bool	init_philosophers(t_table *table)
 		table->philo[i].table = table;
 		i++;
 	}
+	return (true);
 }

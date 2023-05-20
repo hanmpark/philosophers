@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 09:41:39 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/19 09:42:58 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/20 15:59:06 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,6 @@ void	*philo_wait(t_table *table, t_status status)
 	else if (status == DEAD)
 		wait_time = table->tm_starve;
 	while (give_current_time() - timestamp < wait_time)
-	{
-		if (end_simulation(table) == true)
-			return (NULL);
 		usleep(100);
-	}
 	return (NULL);
 }

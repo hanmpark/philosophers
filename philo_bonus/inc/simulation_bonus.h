@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:58:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/19 16:15:21 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/20 16:36:38 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ typedef struct s_table
 	time_t			tm_starve;
 	time_t			tm_eat;
 	time_t			tm_sleep;
-	sem_t			fork_sem;
-	sem_t			print_sem;
-	sem_t			sim_sem;
-	sem_t			ate_enough;
+	sem_t			*fork_sem;
+	sem_t			*print_sem;
+	sem_t			*sim_sem;
+	sem_t			*ate_enough;
 	pthread_t		limiter;
 	struct s_philo	*philo;
 }	t_table;
@@ -54,11 +54,14 @@ bool	init_philosophers(t_table *table);
 
 /* ROUTINE */
 bool	start_simulation(t_table *table);
+void	stop_simulation(t_table *table);
 void	*launch_routine(t_philo *philo);
 void	*hunger_watcher(void *data);
-void	*limiter(t_table *table);
+void	*limiter(void *arg);
 
 /* EXIT */
 bool	init_error(char *msg, t_table *table, bool semaphore);
+void	kill_philosophers(t_table *table);
+void	clean_table(t_table *table, bool semaphore);
 
 #endif

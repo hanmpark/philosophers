@@ -6,12 +6,14 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:46:57 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/19 16:36:43 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/20 16:23:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation_bonus.h"
 #include "errors_bonus.h"
+#include "status_bonus.h"
+#include "timer_bonus.h"
 
 /* Initializes processes:
 * - each process represents a philosopher
@@ -32,8 +34,9 @@ bool	start_simulation(t_table *table)
 			launch_routine(&table->philo[i]);
 		i++;
 	}
-	if (phtread_create(&table->limiter, NULL, &limiter, table))
+	if (pthread_create(&table->limiter, NULL, &limiter, table))
 		return (init_error(ERR_THREAD, table, true));
+	return (true);
 }
 
 /* Joins threads and end the simulation:
@@ -53,7 +56,8 @@ void	stop_simulation(t_table *table)
 		i++;
 	}
 	pthread_join(table->limiter, NULL);
-	sem_wait(&table->sim_sem);
+	sem_wait(table->sim_sem);
+	table->end_sim = true;
 	kill_philosophers(table);
 	clean_table(table, true);
 }

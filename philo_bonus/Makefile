@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/06 17:10:31 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/06 17:19:51 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/05/20 15:55:30 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,26 +19,29 @@ UP = \033[A
 
 ORANGE = \033[38;5;216m
 LBLUE = \033[38;5;153m
-LYELLOW = \033[38;5;222m
-BEIGE = \033[38;5;223m
+LYELLOW = \033[38;5;228m
+LPURPLE = \033[38;5;189m
 LGREEN = \033[38;5;155m
 
 # ---------------------------- SOURCES / OBJECTS ----------------------------- #
 SRC_PATH = ./src/
 
 SRC_TABLE_PATH = ${SRC_PATH}table/
-SRC_TABLE = ${addprefix ${SRC_TABLE_PATH}, parse_input_bonus.c prepare_table_bonus.c}
+SRC_TABLE = ${addprefix ${SRC_TABLE_PATH}, check_arguments_bonus.c \
+											exit_bonus.c \
+											init_global_sem_bonus.c \
+											init_philosophers_bonus.c \
+											init_table_bonus.c}
 
 SRC_SIMULATION_PATH = ${SRC_PATH}simulation/
-SRC_SIMULATION = ${addprefix ${SRC_SIMULATION_PATH}, philosophers.c \
-														sim_manage.c \
-														sim_switch.c \
-														watcher.c}
+SRC_SIMULATION = ${addprefix ${SRC_SIMULATION_PATH}, init_sim_bonus.c \
+														launch_routine_bonus.c \
+														limiter_bonus.c \
+														print_status_bonus.c \
+														time_utils_bonus.c \
+														watcher_bonus.c}
 
-SRC_TOOLS_PATH = ${SRC_PATH}tools/
-SRC_TOOLS = ${addprefix ${SRC_TOOLS_PATH}, print.c time.c}
-
-SRC = ${SRC_TABLE} ${SRC_SIMULATION} ${SRC_TOOLS} ${SRC_PATH}main.c
+SRC = ${SRC_TABLE} ${SRC_SIMULATION} ${SRC_PATH}main.c
 
 OBJ = ${SRC:.c=.o}
 
@@ -66,8 +69,8 @@ ${SRC_PATH}%.o: ${SRC_PATH}%.c ${HEADER_PATH}
 	@${eval SRCS_COUNT = ${shell expr ${SRCS_COUNT} + 1}}
 	@${CC} ${CFLAGS} -I ${HEADER_PATH} -c $< -o ${<:.c=.o}
 	@echo ""
-	@echo " ${BOLD}${CUR}${BEIGE}-> Compiling ${DEF}${BOLD}${LYELLOW}[PHILO]${DEF}"
-	@printf " ${BEIGE}   [${LGREEN}%-23.${BAR}s${BEIGE}] [%d/%d (%d%%)]${DEF}" "***********************" ${SRCS_COUNT} ${SRCS_TOT} ${SRCS_PRCT}
+	@echo " ${BOLD}${CUR}${LPURPLE}-> Compiling ${DEF}${BOLD}${LYELLOW}[PHILO]${DEF}"
+	@printf " ${LPURPLE}   [${LGREEN}%-23.${BAR}s${LPURPLE}] [%d/%d (%d%%)]${DEF}" "***********************" ${SRCS_COUNT} ${SRCS_TOT} ${SRCS_PRCT}
 	@echo "${UP}${UP}${UP}"
 
 # ---------------------------------- RULES ----------------------------------- #
@@ -78,7 +81,7 @@ all: ${NAME}
 ${NAME}: ${OBJ}
 	@echo ""
 	@${CC} ${CFLAGS} ${PTHREAD} ${OBJ} -o ${NAME}
-	@echo "\n\n\n   ${BOLD}${CUR}${LYELLOW}PHILO COMPILED ✨${DEF}\n"
+	@echo "\n\n\n   ${BOLD}${CUR}${LYELLOW}PHILO BONUS COMPILED ✨${DEF}\n"
 
 debug:
 	@${MAKE} DEBUG=1

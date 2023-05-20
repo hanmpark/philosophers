@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/19 16:58:27 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/20 16:37:01 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,24 @@
 
 static void	take_forks(t_philo *philo)
 {
-	sem_wait(&philo->table->fork_sem);
+	sem_wait(philo->table->fork_sem);
 	print_status(philo, false, FORK);
-	sem_wait(&philo->table->fork_sem);
+	sem_wait(philo->table->fork_sem);
 	print_status(philo, false, FORK);
 	print_status(philo, false, EAT);
 	philo->last_meal = give_current_time();
 	philo->times_ate++;
 	if (philo->table->nbr_meals > 0 && \
 		philo->times_ate >= philo->table->nbr_meals)
-		sem_post(&philo->table->sim_sem);
+		sem_post(philo->table->sim_sem);
 	philo_wait(philo->table, EAT);
 }
 
 static void	routine(t_philo *philo)
 {
 	take_forks(philo);
-	sem_post(&philo->table->fork_sem);
-	sem_post(&philo->table->fork_sem);
+	sem_post(philo->table->fork_sem);
+	sem_post(philo->table->fork_sem);
 	print_status(philo, false, SLEEP);
 	philo_wait(philo->table, SLEEP);
 	print_status(philo, false, THINK);
@@ -41,11 +41,11 @@ static void	routine(t_philo *philo)
 
 static void	lonely_routine(t_philo *philo)
 {
-	sem_wait(&philo->table->fork_sem);
+	sem_wait(philo->table->fork_sem);
 	print_status(philo, false, FORK);
 	philo_wait(philo->table, DEAD);
 	print_status(philo, true, DEAD);
-	sem_post(&philo->table->fork_sem);
+	sem_post(philo->table->fork_sem);
 }
 
 /* Launches a routine:
@@ -64,8 +64,6 @@ void	*launch_routine(t_philo *philo)
 			&hunger_watcher, philo))
 			return (NULL);
 	wait_until_start(philo->table->tm_start);
-	if (end_simulation(philo->table))
-		return (NULL);
 	if (philo->table->nbr_philo == 1)
 		lonely_routine(philo);
 	else if (philo->id % 2 != 0)
@@ -73,7 +71,7 @@ void	*launch_routine(t_philo *philo)
 		print_status(philo, false, THINK);
 		usleep(10000);
 	}
-	while (end_simulation(philo->table) == false)
+	while ("Philosophers are annoying")
 		routine(philo);
 	return (NULL);
 }
