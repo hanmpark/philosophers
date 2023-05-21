@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/20 16:37:01 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:00:08 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 static void	take_forks(t_philo *philo)
 {
 	sem_wait(philo->table->fork_sem);
-	print_status(philo, false, FORK);
+	print_status(philo, FORK);
 	sem_wait(philo->table->fork_sem);
-	print_status(philo, false, FORK);
-	print_status(philo, false, EAT);
+	print_status(philo, FORK);
+	print_status(philo, EAT);
 	philo->last_meal = give_current_time();
 	philo->times_ate++;
 	if (philo->table->nbr_meals > 0 && \
@@ -34,18 +34,18 @@ static void	routine(t_philo *philo)
 	take_forks(philo);
 	sem_post(philo->table->fork_sem);
 	sem_post(philo->table->fork_sem);
-	print_status(philo, false, SLEEP);
+	print_status(philo, SLEEP);
 	philo_wait(philo->table, SLEEP);
-	print_status(philo, false, THINK);
+	print_status(philo, THINK);
 }
 
 static void	lonely_routine(t_philo *philo)
 {
 	sem_wait(philo->table->fork_sem);
-	print_status(philo, false, FORK);
+	print_status(philo, FORK);
 	philo_wait(philo->table, DEAD);
-	print_status(philo, true, DEAD);
-	sem_post(philo->table->fork_sem);
+	print_status(philo, DEAD);
+	sem_post(philo->table->sim_sem);
 }
 
 /* Launches a routine:
@@ -68,7 +68,7 @@ void	*launch_routine(t_philo *philo)
 		lonely_routine(philo);
 	else if (philo->id % 2 != 0)
 	{
-		print_status(philo, false, THINK);
+		print_status(philo, THINK);
 		usleep(10000);
 	}
 	while ("Philosophers are annoying")

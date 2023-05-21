@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:27:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/20 16:19:16 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/21 17:15:45 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ static void	putstr_error(char *msg)
 
 static void	destroy_semaphores(t_table *table)
 {
-	unsigned int	i;
-
-	i = 0;
 	sem_close(table->fork_sem);
 	sem_close(table->print_sem);
 	sem_close(table->sim_sem);

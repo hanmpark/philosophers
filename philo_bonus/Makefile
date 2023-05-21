@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/06 17:10:31 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/20 15:55:30 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/05/21 17:18:51 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SRC_SIMULATION = ${addprefix ${SRC_SIMULATION_PATH}, init_sim_bonus.c \
 														time_utils_bonus.c \
 														watcher_bonus.c}
 
-SRC = ${SRC_TABLE} ${SRC_SIMULATION} ${SRC_PATH}main.c
+SRC = ${SRC_TABLE} ${SRC_SIMULATION} ${SRC_PATH}main_bonus.c
 
 OBJ = ${SRC:.c=.o}
 
