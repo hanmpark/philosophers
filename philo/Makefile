@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 17:03:40 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/12 11:18:54 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/05/22 23:45:40 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,18 +27,19 @@ LGREEN = \033[38;5;155m
 SRC_PATH = ./src/
 
 SRC_TABLE_PATH = ${SRC_PATH}table/
-SRC_TABLE = ${addprefix ${SRC_TABLE_PATH}, check_arguments.c \
-											init_global_mutexes.c \
-											init_philosophers.c \
-											init_table.c \
-											exit.c}
+SRC_TABLE = ${addprefix ${SRC_TABLE_PATH}, arguments.c \
+											exit.c \
+											global_mutexes.c \
+											philo_data.c \
+											table.c}
 
 SRC_SIMULATION_PATH = ${SRC_PATH}simulation/
-SRC_SIMULATION = ${addprefix ${SRC_SIMULATION_PATH}, launch_routine.c \
-														init_sim.c \
-														print_status.c \
-														watcher.c \
-														time_utils.c}
+SRC_SIMULATION = ${addprefix ${SRC_SIMULATION_PATH}, print_status.c \
+														check_ending.c \
+														routine.c \
+														simulation.c \
+														time_utils.c \
+														watcher.c}
 
 SRC = ${SRC_TABLE} ${SRC_SIMULATION} ${SRC_PATH}main.c
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_arguments.c                                  :+:      :+:    :+:   */
+/*   arguments.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:29:18 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/15 12:16:41 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 23:10:12 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,6 @@ int	philo_atoi(char *arg)
 	return ((int)number);
 }
 
-/* Parses the arguments:
-* - number of arguments
-* - should be positive integers
-*/
 bool	check_arguments(int argc, char **argv)
 {
 	int	i;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch_routine.c                                   :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 12:58:53 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/22 14:59:11 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 23:47:59 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,40 @@
 #include "status.h"
 #include "timer.h"
 
-static void	take_forks(t_philo *philo)
+static void	take_forks(t_philo *ph)
 {
-	pthread_mutex_lock(&philo->table->fork[philo->id - 1]);
-	print_status(philo, false, FORK);
-	pthread_mutex_lock(&philo->table->fork[philo->id % philo->table->nbr_philo]);
-	print_status(philo, false, FORK);
-	print_status(philo, false, EAT);
-	pthread_mutex_lock(&philo->meal_lock);
-	philo->last_meal = give_current_time();
-	pthread_mutex_unlock(&philo->meal_lock);
-	pthread_mutex_lock(&philo->times_lock);
-	philo->times_ate++;
-	pthread_mutex_unlock(&philo->times_lock);
-	philo_wait(philo->table, EAT);
+	pthread_mutex_lock(&ph->table->fork[ph->id - 1]);
+	print_status(ph, false, FORK);
+	pthread_mutex_lock(&ph->table->fork[ph->id % ph->table->nbr_philo]);
+	print_status(ph, false, FORK);
+	print_status(ph, false, EAT);
+	pthread_mutex_lock(&ph->meal_lock);
+	ph->last_meal = current_time();
+	pthread_mutex_unlock(&ph->meal_lock);
+	pthread_mutex_lock(&ph->times_lock);
+	ph->times_ate++;
+	pthread_mutex_unlock(&ph->times_lock);
+	philo_wait(ph->table, EAT);
 }
 
-static void	routine(t_philo *philo)
+static void	routine(t_philo *ph)
 {
-	take_forks(philo);
-	pthread_mutex_unlock(&philo->table->fork[philo->id - 1]);
-	pthread_mutex_unlock(&philo->table->fork[philo->id % philo->table->nbr_philo]);
-	print_status(philo, false, SLEEP);
-	philo_wait(philo->table, SLEEP);
-	print_status(philo, false, THINK);
+	take_forks(ph);
+	pthread_mutex_unlock(&ph->table->fork[ph->id - 1]);
+	pthread_mutex_unlock(&ph->table->fork[ph->id % ph->table->nbr_philo]);
+	print_status(ph, false, SLEEP);
+	philo_wait(ph->table, SLEEP);
+	print_status(ph, false, THINK);
 }
 
-static void	lonely_routine(t_philo *philo)
+static void	lonely_routine(t_philo *ph)
 {
-	pthread_mutex_lock(&philo->table->fork[0]);
-	print_status(philo, false, FORK);
-	philo_wait(philo->table, DEAD);
-	print_status(philo, true, DEAD);
-	pthread_mutex_unlock(&philo->table->fork[0]);
-	philo->table->end_sim = true;
+	pthread_mutex_lock(&ph->table->fork[0]);
+	print_status(ph, false, FORK);
+	philo_wait(ph->table, DEAD);
+	print_status(ph, true, DEAD);
+	pthread_mutex_unlock(&ph->table->fork[0]);
+	ph->table->end_sim = true;
 }
 
 /* Launches a routine:
@@ -67,7 +67,7 @@ void	*launch_routine(void *data)
 	philo->last_meal = philo->table->tm_start;
 	pthread_mutex_unlock(&philo->meal_lock);
 	wait_until_start(philo->table->tm_start);
-	if (end_simulation(philo->table) == true)
+	if (check_end(philo->table) == true)
 		return (NULL);
 	if (philo->table->nbr_philo == 1)
 		lonely_routine(philo);
@@ -76,7 +76,7 @@ void	*launch_routine(void *data)
 		print_status(philo, false, THINK);
 		usleep(10000);
 	}
-	while (end_simulation(philo->table) == false)
+	while (check_end(philo->table) == false)
 		routine(philo);
 	return (NULL);
 }

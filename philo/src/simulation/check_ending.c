@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_ending.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 10:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/22 23:24:44 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/05/22 23:22:27 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/05/22 23:47:29 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation.h"
 
-int	main(int argc, char **argv)
+void	set_sim_bool(t_table *table, bool state)
 {
-	t_table	*table;
+	pthread_mutex_lock(&table->sim_lock);
+	table->end_sim = state;
+	pthread_mutex_unlock(&table->sim_lock);
+}
 
-	table = NULL;
-	table = init_table(argc, argv);
-	if (!table)
-		return (EXIT_FAILURE);
-	if (start_simulation(table) == false)
-		return (EXIT_FAILURE);
-	end_simulation(table);
-	return (EXIT_SUCCESS);
+bool	check_end(t_table *table)
+{
+	bool	end;
+
+	end = false;
+	pthread_mutex_lock(&table->sim_lock);
+	if (table->end_sim == true)
+		end = true;
+	pthread_mutex_unlock(&table->sim_lock);
+	return (end);
 }

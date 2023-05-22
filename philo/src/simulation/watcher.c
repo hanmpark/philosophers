@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:06 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/22 17:26:42 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 23:49:33 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,11 @@
 #include "status.h"
 #include "timer.h"
 
-void	set_sim_bool(t_table *table, bool state)
-{
-	pthread_mutex_lock(&table->sim_lock);
-	table->end_sim = state;
-	pthread_mutex_unlock(&table->sim_lock);
-}
-
-static bool	healthy_philo(t_philo *philo)
+static bool	healthy_philosopher(t_philo *philo)
 {
 	time_t	timestamp;
 
-	timestamp = give_current_time();
+	timestamp = current_time();
 	pthread_mutex_lock(&philo->meal_lock);
 	if (timestamp - philo->last_meal >= philo->table->tm_starve)
 	{
@@ -38,7 +31,19 @@ static bool	healthy_philo(t_philo *philo)
 	return (true);
 }
 
-static bool	end_condition_reached(t_table *table)
+static unsigned int	full_philosopher(t_philo *philo)
+{
+	unsigned int	is_full;
+
+	is_full = 0;
+	pthread_mutex_lock(&philo->times_lock);
+	if (philo->times_ate >= philo->table->nbr_meals)
+		is_full = 1;
+	pthread_mutex_unlock(&philo->times_lock);
+	return (is_full);
+}
+
+static bool	end_condition(t_table *table)
 {
 	unsigned int	i;
 	unsigned int	fulfilled_meals;
@@ -47,33 +52,18 @@ static bool	end_condition_reached(t_table *table)
 	fulfilled_meals = 0;
 	while (i < table->nbr_philo)
 	{
-		if (healthy_philo(&table->philo[i]) == false)
+		if (healthy_philosopher(&table->philo[i]) == false)
 			return (true);
-		pthread_mutex_lock(&table->philo[i].times_lock);
-		if (table->nbr_meals > 0 && \
-			table->philo[i].times_ate >= table->nbr_meals)
-			fulfilled_meals++;
-		pthread_mutex_unlock(&table->philo[i].times_lock);
+		if (table->nbr_meals > 0)
+			fulfilled_meals += full_philosopher(&table->philo[i]);
 		i++;
 	}
-	if (table->nbr_meals > 0 && fulfilled_meals == table->nbr_philo)
+	if (fulfilled_meals == table->nbr_philo)
 	{
 		set_sim_bool(table, true);
 		return (true);
 	}
 	return (false);
-}
-
-bool	end_simulation(t_table *table)
-{
-	bool	end;
-
-	end = false;
-	pthread_mutex_lock(&table->sim_lock);
-	if (table->end_sim == true)
-		end = true;
-	pthread_mutex_unlock(&table->sim_lock);
-	return (end);
 }
 
 /* Watcher's thread:
@@ -93,7 +83,7 @@ void	*watcher(void *data)
 	wait_until_start(table->tm_start);
 	while ("Philosophers are annoying")
 	{
-		if (end_condition_reached(table) == true)
+		if (end_condition(table) == true)
 			return (NULL);
 		usleep(1000);
 	}

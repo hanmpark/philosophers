@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:59:59 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/19 09:42:46 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 23:48:24 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "status.h"
 #include "timer.h"
 
-time_t	give_current_time(void)
+time_t	current_time(void)
 {
 	struct timeval	tv;
 
@@ -24,7 +24,7 @@ time_t	give_current_time(void)
 
 void	wait_until_start(time_t start)
 {
-	while (give_current_time() < start)
+	while (current_time() < start)
 		usleep(100);
 }
 
@@ -39,7 +39,7 @@ void	*philo_wait(t_table *table, t_status status)
 	time_t	timestamp;
 	time_t	wait_time;
 
-	timestamp = give_current_time();
+	timestamp = current_time();
 	wait_time = 0;
 	if (status == EAT)
 		wait_time = table->tm_eat;
@@ -47,9 +47,9 @@ void	*philo_wait(t_table *table, t_status status)
 		wait_time = table->tm_sleep;
 	else if (status == DEAD)
 		wait_time = table->tm_starve;
-	while (give_current_time() - timestamp < wait_time)
+	while (current_time() - timestamp < wait_time)
 	{
-		if (end_simulation(table) == true)
+		if (check_end(table) == true)
 			return (NULL);
 		usleep(100);
 	}

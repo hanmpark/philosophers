@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:32:52 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/12 11:46:16 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 23:47:20 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_table
 	struct s_philo	*philo;
 }	t_table;
 
-// INITALIZES EVERYTHING FOR THE PROGRAM TO WORK
+// TABLE INITIALIZATION
 t_table	*init_table(int argc, char **argv);
 int		philo_atoi(char *arg);
 bool	check_arguments(int argc, char **argv);
@@ -53,11 +53,13 @@ bool	init_philosophers(t_table *table);
 
 // ROUTINE FOR PHILOSOPHER(S)
 bool	start_simulation(t_table *table);
-void	stop_simulation(t_table *table);
+void	end_simulation(t_table *table);
 void	*launch_routine(void *data);
+
+// STOP SIMULATION
 void	*watcher(void *data);
-bool	end_simulation(t_table *table);
 void	set_sim_bool(t_table *table, bool state);
+bool	check_end(t_table *table);
 
 // FREES ALLOCATED POINTERS
 void	clean_table(t_table *table, bool mutex);

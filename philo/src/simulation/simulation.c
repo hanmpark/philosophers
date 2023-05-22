@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_sim.c                                         :+:      :+:    :+:   */
+/*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 13:35:33 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/19 14:06:05 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 23:48:07 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	start_simulation(t_table *table)
 {
 	unsigned int	i;
 
-	table->tm_start = give_current_time() + (table->nbr_philo * 20);
+	table->tm_start = current_time() + (table->nbr_philo * 20);
 	i = 0;
 	while (i < table->nbr_philo)
 	{
@@ -44,7 +44,7 @@ bool	start_simulation(t_table *table)
 * - destroys the mutexes
 * - frees the allocated pointers
 */
-void	stop_simulation(t_table *table)
+void	end_simulation(t_table *table)
 {
 	unsigned int	i;
 
