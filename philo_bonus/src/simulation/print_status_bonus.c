@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 09:37:35 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/21 17:16:23 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:14:19 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 * - if the simulation has ended, it does not print anything
 * - except for the DEAD status, it prints it anyway
 */
-void	*print_status(t_philo *philo, t_status status)
+void	*print_status(t_philo *philo, bool last, t_status status)
 {
 	time_t	timestamp;
 
@@ -35,6 +35,7 @@ void	*print_status(t_philo *philo, t_status status)
 		printf("%ld %d is sleeping\n", timestamp, philo->id);
 	if (status == THINK)
 		printf("%ld %d is thinking\n", timestamp, philo->id);
-	sem_post(philo->table->print_sem);
+	if (last == false)
+		sem_post(philo->table->print_sem);
 	return (NULL);
 }

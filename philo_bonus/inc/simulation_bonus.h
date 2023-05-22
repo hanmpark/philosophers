@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:58:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/20 16:36:38 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 13:19:51 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_philo
 	pid_t			pid;
 	unsigned int	id;
 	int				times_ate;
-	pthread_t		hunger_watcher;
+	pthread_t		watcher;
 	struct s_table	*table;
 }	t_philo;
 
@@ -56,7 +56,7 @@ bool	init_philosophers(t_table *table);
 bool	start_simulation(t_table *table);
 void	stop_simulation(t_table *table);
 void	*launch_routine(t_philo *philo);
-void	*hunger_watcher(void *data);
+void	*watcher(void *data);
 void	*limiter(void *arg);
 
 /* EXIT */

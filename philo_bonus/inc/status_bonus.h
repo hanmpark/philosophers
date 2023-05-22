@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 17:23:41 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/21 17:16:31 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:14:29 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ typedef enum e_status
 	THINK
 }	t_status;
 
-void	*print_status(t_philo *philo, t_status status);
+void	*print_status(t_philo *philo, bool last, t_status status);
 
 #endif

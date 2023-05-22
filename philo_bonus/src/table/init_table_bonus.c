@@ -6,12 +6,11 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:17:19 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/21 17:35:37 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 13:14:31 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation_bonus.h"
-#include <stdio.h>
 
 static void	set_rules(t_table *table, int argc, char **argv)
 {
