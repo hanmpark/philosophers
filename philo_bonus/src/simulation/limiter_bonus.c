@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:05:20 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/22 12:56:31 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:20:36 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "status_bonus.h"
 #include "timer_bonus.h"
 
+// If all the philosophers have eaten at least nbr_meals time, stop the sim
 void	*limiter(void *arg)
 {
 	unsigned int	fulfilled_meals;

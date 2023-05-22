@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:06 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/12 13:13:33 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:26:42 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ bool	end_simulation(t_table *table)
 }
 
 /* Watcher's thread:
-* - waits for all other threads to be initialized
+* - waits for all other threads
 * - supervise philosophers
 * - checks tm_starve
 * - checks nbr_meals

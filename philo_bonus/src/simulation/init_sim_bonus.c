@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:46:57 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/22 14:35:22 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:16:11 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ bool	start_simulation(t_table *table)
 			init_error(ERR_PHILO, table, true);
 		if (table->philo[i].pid == 0)
 		{
-			if (pthread_create(&table->philo[i].watcher, NULL, &watcher, &table->philo[i]))
+			if (pthread_create(&table->philo[i].watcher, NULL, \
+				&watcher, &table->philo[i]))
 				return (init_error(ERR_PHILO, table, true));
 			launch_routine(&table->philo[i]);
 		}
@@ -43,10 +44,9 @@ bool	start_simulation(t_table *table)
 	return (true);
 }
 
-/* Joins threads and end the simulation:
-* - joins all the philosophers' thread
-* - joins the watcher's thread if it exists
-* - destroys the mutexes
+/* End the simulation:
+* - joins the limiter's thread
+* - destroys the semaphores
 * - frees the allocated pointers
 */
 void	stop_simulation(t_table *table)

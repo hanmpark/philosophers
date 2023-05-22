@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:37:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/22 13:19:15 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:21:24 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static bool	healthy_philo(t_philo *philo)
 }
 
 /* Watcher's thread:
-* - waits for all other threads to be initialized
+* - waits for all other processes
 * - supervise philosophers
 * - checks tm_starve
 * - checks nbr_meals
