@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:37:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 12:59:05 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 13:05:44 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,10 @@ static void	full_philosopher(t_philo *philo)
 void	*watcher(void *data)
 {
 	t_philo	*philo;
-	bool	passed;
 
 	philo = (t_philo *)data;
 	if (philo->table->nbr_philo < 2 || philo->table->nbr_meals == 0)
 		return (NULL);
-	passed = false;
 	wait_until_start(philo->table->tm_start);
 	while ("Philosophers are annoying")
 	{
