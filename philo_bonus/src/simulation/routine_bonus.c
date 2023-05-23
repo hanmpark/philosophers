@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 12:51:37 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:54:41 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static void	lonely_routine(t_philo *philo)
 */
 void	*launch_routine(t_philo *philo)
 {
-	philo->last_meal = philo->table->tm_start;
 	if (philo->table->nbr_meals == 0 || philo->table->tm_starve == 0)
 		return (NULL);
 	wait_until_start(philo->table->tm_start);
