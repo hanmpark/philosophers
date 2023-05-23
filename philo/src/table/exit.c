@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:27:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/12 12:21:49 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 11:39:22 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 #include "status.h"
 #include "errors.h"
 #include "timer.h"
-
-static void	putstr_error(char *msg)
-{
-	while (*msg)
-		write(2, &*msg++, sizeof(char));
-}
 
 static void	destroy_mutexes(t_table *table)
 {
@@ -54,6 +48,7 @@ bool	init_error(char *msg, t_table *table, bool mutex)
 {
 	if (table)
 		clean_table(table, mutex);
-	putstr_error(msg);
+	while (*msg)
+		write(2, &*msg++, sizeof(char));
 	return (false);
 }
