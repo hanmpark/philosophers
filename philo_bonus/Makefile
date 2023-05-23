@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/06 17:10:31 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/21 17:18:51 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/05/23 13:01:56 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,18 +27,19 @@ LGREEN = \033[38;5;155m
 SRC_PATH = ./src/
 
 SRC_TABLE_PATH = ${SRC_PATH}table/
-SRC_TABLE = ${addprefix ${SRC_TABLE_PATH}, check_arguments_bonus.c \
+SRC_TABLE = ${addprefix ${SRC_TABLE_PATH}, arguments_bonus.c \
 											exit_bonus.c \
-											init_global_sem_bonus.c \
-											init_philosophers_bonus.c \
-											init_table_bonus.c}
+											global_sem_bonus.c \
+											individual_sem_bonus.c \
+											philo_data_bonus.c \
+											table_bonus.c}
 
 SRC_SIMULATION_PATH = ${SRC_PATH}simulation/
-SRC_SIMULATION = ${addprefix ${SRC_SIMULATION_PATH}, init_sim_bonus.c \
-														launch_routine_bonus.c \
-														limiter_bonus.c \
-														print_status_bonus.c \
-														time_utils_bonus.c \
+SRC_SIMULATION = ${addprefix ${SRC_SIMULATION_PATH}, limiter_bonus.c \
+														print_bonus.c \
+														routine_bonus.c \
+														simulation_bonus.c \
+														time_bonus.c \
 														watcher_bonus.c}
 
 SRC = ${SRC_TABLE} ${SRC_SIMULATION} ${SRC_PATH}main_bonus.c

@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:46:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 11:43:40 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 13:03:14 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static bool	init_individual_sem(t_philo *ph, unsigned int number)
 	ph->count_lock = sem_open(ph->nm_count, O_CREAT, S_IRUSR | S_IWUSR, 1);
 	if (ph->count_lock == SEM_FAILED)
 		return (init_error(ERR_SEM, ph->table, false));
+	return (true);
 }
 
 bool	init_philosophers(t_table *table)

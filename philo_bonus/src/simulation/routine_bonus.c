@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 11:44:57 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 12:51:37 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@ static void	take_forks(t_philo *philo)
 	sem_wait(philo->table->fork_sem);
 	print_status(philo, false, FORK);
 	print_status(philo, false, EAT);
+	sem_wait(philo->meal_lock);
 	philo->last_meal = give_current_time();
+	sem_post(philo->meal_lock);
+	sem_wait(philo->count_lock);
 	philo->count_meal++;
+	sem_post(philo->count_lock);
 	philo_wait(philo->table, EAT);
 }
 

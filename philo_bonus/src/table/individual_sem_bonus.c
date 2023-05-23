@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:26:46 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 09:31:26 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 13:02:48 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ static char	*ft_strjoin(char *s1, char *s2)
 	join = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!join)
 		return (NULL);
-	i = 0;
-	while (s1 && s1[i])
-		join[i] = s1[i++];
-	j = 0;
-	while (s2 && s2[j])
-		join[i++] = s2[j++];
+	i = -1;
+	while (s1 && s1[++i])
+		join[i] = s1[i];
+	j = -1;
+	while (s2 && s2[++j])
+		join[i++] = s2[j];
 	join[i] = 0;
 	return (join);
 }
