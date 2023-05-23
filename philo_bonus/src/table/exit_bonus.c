@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:27:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/21 17:15:45 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 11:34:51 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,26 @@
 #include "timer_bonus.h"
 #include <signal.h>
 
-static void	putstr_error(char *msg)
+static void	destroy_individual_sem(t_table *table)
 {
-	while (*msg)
-		write(2, &*msg++, sizeof(char));
+	unsigned int	i;
+
+	i = 0;
+	while (i < table->nbr_philo)
+	{
+		sem_close(table->philo[i].meal_lock);
+		sem_close(table->philo[i].count_lock);
+		sem_unlink(table->philo[i].nm_meal);
+		sem_unlink(table->philo[i].nm_count);
+		free(table->philo[i].nm_meal);
+		free(table->philo[i].nm_count);
+		i++;
+	}
 }
 
-static void	destroy_semaphores(t_table *table)
+static void	destroy_sem(t_table *table)
 {
+	destroy_individual_sem(table);
 	sem_close(table->fork_sem);
 	sem_close(table->print_sem);
 	sem_close(table->sim_sem);
@@ -51,7 +63,7 @@ void	clean_table(t_table *table, bool semaphore)
 	if (!table)
 		return ;
 	if (semaphore)
-		destroy_semaphores(table);
+		destroy_sem(table);
 	if (table->philo != NULL)
 		free(table->philo);
 	free(table);
@@ -61,6 +73,7 @@ bool	init_error(char *msg, t_table *table, bool semaphore)
 {
 	if (table)
 		clean_table(table, semaphore);
-	putstr_error(msg);
+	while (*msg)
+		write(2, &*msg++, sizeof(char));
 	return (false);
 }

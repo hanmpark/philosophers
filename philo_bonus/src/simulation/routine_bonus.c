@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch_routine_bonus.c                             :+:      :+:    :+:   */
+/*   routine_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/22 11:27:30 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 11:44:57 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	take_forks(t_philo *philo)
 	print_status(philo, false, FORK);
 	print_status(philo, false, EAT);
 	philo->last_meal = give_current_time();
-	philo->times_ate++;
+	philo->count_meal++;
 	philo_wait(philo->table, EAT);
 }
 

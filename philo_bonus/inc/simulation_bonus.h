@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:58:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/22 13:19:51 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 09:30:57 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@
 
 typedef struct s_philo
 {
-	time_t			last_meal;
-	pid_t			pid;
 	unsigned int	id;
-	int				times_ate;
+	pid_t			pid;
+	time_t			last_meal;
+	int				count_meal;
+	char			*nm_meal;
+	char			*nm_count;
+	sem_t			*meal_lock;
+	sem_t			*count_lock;
 	pthread_t		watcher;
 	struct s_table	*table;
 }	t_philo;
@@ -51,6 +55,7 @@ int		philo_atoi(char *arg);
 t_table	*init_table(int argc, char **argv);
 bool	init_global_sem(t_table *table);
 bool	init_philosophers(t_table *table);
+char	*individual_sem_name(char *name, unsigned int number);
 
 /* ROUTINE */
 bool	start_simulation(t_table *table);

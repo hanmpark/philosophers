@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:37:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/22 17:21:24 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 08:33:10 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "status_bonus.h"
 #include "timer_bonus.h"
 
-static bool	healthy_philo(t_philo *philo)
+static bool	healthy_philosopher(t_philo *philo)
 {
 	time_t	timestamp;
 
@@ -26,6 +26,13 @@ static bool	healthy_philo(t_philo *philo)
 		return (false);
 	}
 	return (true);
+}
+
+static void	full_philosopher(t_philo *philo)
+{
+	// need a semaphore here
+	if (philo->count_meal == philo->table->nbr_meals)
+		sem_post(philo->table->ate_enough);
 }
 
 /* Watcher's thread:
@@ -47,14 +54,10 @@ void	*watcher(void *data)
 	wait_until_start(philo->table->tm_start);
 	while ("Philosophers are annoying")
 	{
-		if (healthy_philo(philo) == false)
+		if (healthy_philosopher(philo) == false)
 			return (NULL);
-		if (philo->table->nbr_meals > 0 && passed == false && \
-			philo->times_ate >= philo->table->nbr_meals)
-		{
-			passed = true;
-			sem_post(philo->table->ate_enough);
-		}
+		if (philo->table->nbr_meals > 0)
+			full_philosopher(philo);
 		usleep(1000);
 	}
 	return (NULL);
