@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:46:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 13:47:54 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 21:57:59 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,12 @@
 
 static bool	init_individual_sem(t_philo *ph, unsigned int number)
 {
-	ph->nm_meal = individual_sem_name("/meal_lock", number);
-	if (!ph->nm_meal)
+	ph->nm_lock = individual_sem_name("/meal_lock", number);
+	if (!ph->nm_lock)
 		return (init_error(ERR_SEM, ph->table, false));
-	ph->nm_count = individual_sem_name("/count_lock", number);
-	if (!ph->nm_count)
-	{
-		free(ph->nm_meal);
-		return (init_error(ERR_SEM, ph->table, false));
-	}
-	sem_unlink(ph->nm_meal);
-	sem_unlink(ph->nm_count);
-	ph->meal_lock = sem_open(ph->nm_meal, O_CREAT, S_IRUSR | S_IWUSR, 1);
+	sem_unlink(ph->nm_lock);
+	ph->meal_lock = sem_open(ph->nm_lock, O_CREAT, S_IRUSR | S_IWUSR, 1);
 	if (ph->meal_lock == SEM_FAILED)
-		return (init_error(ERR_SEM, ph->table, false));
-	ph->count_lock = sem_open(ph->nm_count, O_CREAT, S_IRUSR | S_IWUSR, 1);
-	if (ph->count_lock == SEM_FAILED)
 		return (init_error(ERR_SEM, ph->table, false));
 	return (true);
 }

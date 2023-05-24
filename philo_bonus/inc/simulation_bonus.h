@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:58:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 09:30:57 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 20:33:30 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ typedef struct s_philo
 	pid_t			pid;
 	time_t			last_meal;
 	int				count_meal;
-	char			*nm_meal;
-	char			*nm_count;
+	char			*nm_lock;
 	sem_t			*meal_lock;
-	sem_t			*count_lock;
 	pthread_t		watcher;
 	struct s_table	*table;
 }	t_philo;

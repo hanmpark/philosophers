@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:27:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 11:34:51 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 21:59:04 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ static void	destroy_individual_sem(t_table *table)
 	while (i < table->nbr_philo)
 	{
 		sem_close(table->philo[i].meal_lock);
-		sem_close(table->philo[i].count_lock);
-		sem_unlink(table->philo[i].nm_meal);
-		sem_unlink(table->philo[i].nm_count);
-		free(table->philo[i].nm_meal);
-		free(table->philo[i].nm_count);
+		sem_unlink(table->philo[i].nm_lock);
+		free(table->philo[i].nm_lock);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:37:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 13:05:44 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/23 22:01:04 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static bool	healthy_philosopher(t_philo *philo)
 
 static void	full_philosopher(t_philo *philo)
 {
-	sem_wait(philo->count_lock);
+	sem_wait(philo->meal_lock);
 	if (philo->count_meal == philo->table->nbr_meals)
 		sem_post(philo->table->ate_enough);
-	sem_post(philo->count_lock);
+	sem_post(philo->meal_lock);
 }
 
 /* Watcher's thread:
