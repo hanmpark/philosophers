@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:05:20 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/25 12:50:12 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/25 20:10:57 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ void	*limiter(void *arg)
 	table = (t_table *)arg;
 	if (table->nbr_philo < 2 || table->nbr_meals <= 0 || table->tm_starve == 0)
 		return (NULL);
-	wait_until_start(table->tm_start);
 	fulfilled_meals = 0;
-	while (fulfilled_meals < table->nbr_philo && table->end_sim == false)
+	while (fulfilled_meals < table->nbr_philo && !table->end_sim)
 	{
 		sem_wait(table->ate_enough);
 		fulfilled_meals++;

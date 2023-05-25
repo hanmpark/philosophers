@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:27:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 21:59:04 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:20:59 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ static void	destroy_individual_sem(t_table *table)
 static void	destroy_sem(t_table *table)
 {
 	destroy_individual_sem(table);
-	sem_close(table->fork_sem);
-	sem_close(table->print_sem);
-	sem_close(table->sim_sem);
+	sem_close(table->fork_lock);
+	sem_close(table->print_lock);
+	sem_close(table->sim_lock);
 	sem_close(table->ate_enough);
-	sem_unlink("/fork");
-	sem_unlink("/print");
-	sem_unlink("/sim_sem");
+	sem_unlink("/fork_lock");
+	sem_unlink("/print_lock");
+	sem_unlink("/sim_lock");
 	sem_unlink("/ate_enough");
 }
 

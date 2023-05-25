@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/25 12:50:48 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:20:42 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void	take_forks(t_philo *philo)
 	print_status(philo, false, EAT);
 	sem_wait(philo->meal_lock);
 	philo->last_meal = give_current_time();
-	philo->count_meal++;
+	if (++philo->count_meal == philo->table->nbr_meals)
+		sem_post(philo->table->ate_enough);
 	sem_post(philo->meal_lock);
 	philo_wait(philo->table, EAT);
 }
@@ -57,7 +58,6 @@ void	*launch_routine(t_philo *philo)
 {
 	if (philo->table->nbr_meals == 0 || philo->table->tm_starve == 0)
 		return (NULL);
-	wait_until_start(philo->table->tm_start);
 	if (philo->table->nbr_philo == 1)
 		lonely_routine(philo);
 	else if (philo->id % 2 != 0)

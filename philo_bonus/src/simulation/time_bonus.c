@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 09:41:39 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 11:46:05 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:31:58 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@ time_t	give_current_time(void)
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
-
-void	wait_until_start(time_t start)
-{
-	while (give_current_time() < start)
-		usleep(100);
 }
 
 /* Waits for the given time in ms:

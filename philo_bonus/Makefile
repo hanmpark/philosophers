@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/06 17:10:31 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/23 13:01:56 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/05/25 19:24:21 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ OBJ = ${SRC:.c=.o}
 
 # --------------------------------- COMPILER --------------------------------- #
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = 
 
 ifdef DEBUG
 	CFLAGS += -fsanitize=address -g
@@ -75,7 +75,7 @@ ${SRC_PATH}%.o: ${SRC_PATH}%.c ${HEADER_PATH}
 	@echo "${UP}${UP}${UP}"
 
 # ---------------------------------- RULES ----------------------------------- #
-NAME = philo
+NAME = philo_bonus
 
 all: ${NAME}
 

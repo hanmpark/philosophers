@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:37:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/25 12:51:21 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:33:33 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,12 @@ static bool	healthy_philosopher(t_philo *philo)
 	if (timestamp - philo->last_meal >= philo->table->tm_starve)
 	{
 		sem_post(philo->meal_lock);
-		sem_post(philo->table->sim_lock);
 		print_status(philo, true, DEAD);
+		sem_post(philo->table->sim_lock);
 		return (false);
 	}
 	sem_post(philo->meal_lock);
 	return (true);
-}
-
-static void	full_philosopher(t_philo *philo)
-{
-	sem_wait(philo->meal_lock);
-	if (philo->count_meal == philo->table->nbr_meals)
-		sem_post(philo->table->ate_enough);
-	sem_post(philo->meal_lock);
 }
 
 /* Watcher's thread:
@@ -53,13 +45,10 @@ void	*watcher(void *data)
 	philo = (t_philo *)data;
 	if (philo->table->nbr_philo < 2 || philo->table->nbr_meals == 0)
 		return (NULL);
-	wait_until_start(philo->table->tm_start);
 	while ("Philosophers are annoying")
 	{
 		if (healthy_philosopher(philo) == false)
-			return (NULL);
-		if (philo->table->nbr_meals > 0)
-			full_philosopher(philo);
+			exit(EXIT_FAILURE);
 		usleep(1000);
 	}
 	return (NULL);
