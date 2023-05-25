@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:05:20 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/22 17:20:36 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:50:12 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void	*limiter(void *arg)
 		sem_wait(table->ate_enough);
 		fulfilled_meals++;
 	}
-	sem_post(table->sim_sem);
+	sem_post(table->sim_lock);
 	return (NULL);
 }

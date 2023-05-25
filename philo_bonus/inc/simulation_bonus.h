@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:58:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 20:33:30 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:49:30 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ typedef struct s_table
 	time_t			tm_starve;
 	time_t			tm_eat;
 	time_t			tm_sleep;
-	sem_t			*fork_sem;
-	sem_t			*print_sem;
-	sem_t			*sim_sem;
+	sem_t			*fork_lock;
+	sem_t			*print_lock;
+	sem_t			*sim_lock;
 	sem_t			*ate_enough;
 	pthread_t		limiter;
 	struct s_philo	*philo;

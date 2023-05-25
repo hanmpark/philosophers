@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:37:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 22:01:04 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:51:21 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static bool	healthy_philosopher(t_philo *philo)
 	if (timestamp - philo->last_meal >= philo->table->tm_starve)
 	{
 		sem_post(philo->meal_lock);
-		sem_post(philo->table->sim_sem);
+		sem_post(philo->table->sim_lock);
 		print_status(philo, true, DEAD);
 		return (false);
 	}

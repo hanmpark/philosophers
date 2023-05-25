@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:46:57 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/24 00:36:13 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:51:04 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ bool	start_simulation(t_table *table)
 */
 void	stop_simulation(t_table *table)
 {
-	sem_wait(table->sim_sem);
+	sem_wait(table->sim_lock);
 	table->end_sim = true;
 	sem_post(table->ate_enough);
 	pthread_join(table->limiter, NULL);

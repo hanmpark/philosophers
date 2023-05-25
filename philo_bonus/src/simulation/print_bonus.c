@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 09:37:35 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 11:44:45 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:50:21 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*print_status(t_philo *philo, bool last, t_status status)
 	time_t	timestamp;
 
 	timestamp = give_current_time() - philo->table->tm_start;
-	sem_wait(philo->table->print_sem);
+	sem_wait(philo->table->print_lock);
 	if (status == DEAD)
 		printf("%ld %d died\n", timestamp, philo->id);
 	if (status == FORK)
@@ -35,6 +35,6 @@ void	*print_status(t_philo *philo, bool last, t_status status)
 	if (status == THINK)
 		printf("%ld %d is thinking\n", timestamp, philo->id);
 	if (last == false)
-		sem_post(philo->table->print_sem);
+		sem_post(philo->table->print_lock);
 	return (NULL);
 }

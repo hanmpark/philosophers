@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/24 00:38:54 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:50:48 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 static void	take_forks(t_philo *philo)
 {
-	sem_wait(philo->table->fork_sem);
+	sem_wait(philo->table->fork_lock);
 	print_status(philo, false, FORK);
-	sem_wait(philo->table->fork_sem);
+	sem_wait(philo->table->fork_lock);
 	print_status(philo, false, FORK);
 	print_status(philo, false, EAT);
 	sem_wait(philo->meal_lock);
@@ -31,8 +31,8 @@ static void	take_forks(t_philo *philo)
 static void	routine(t_philo *philo)
 {
 	take_forks(philo);
-	sem_post(philo->table->fork_sem);
-	sem_post(philo->table->fork_sem);
+	sem_post(philo->table->fork_lock);
+	sem_post(philo->table->fork_lock);
 	print_status(philo, false, SLEEP);
 	philo_wait(philo->table, SLEEP);
 	print_status(philo, false, THINK);
@@ -40,11 +40,11 @@ static void	routine(t_philo *philo)
 
 static void	lonely_routine(t_philo *philo)
 {
-	sem_wait(philo->table->fork_sem);
+	sem_wait(philo->table->fork_lock);
 	print_status(philo, false, FORK);
 	philo_wait(philo->table, DEAD);
 	print_status(philo, true, DEAD);
-	sem_post(philo->table->sim_sem);
+	sem_post(philo->table->sim_lock);
 }
 
 /* Launches a routine:
