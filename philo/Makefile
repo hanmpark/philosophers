@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 17:03:40 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/22 23:45:40 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/05/26 11:59:00 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,11 @@ SRC_TABLE = ${addprefix ${SRC_TABLE_PATH}, arguments.c \
 											table.c}
 
 SRC_SIMULATION_PATH = ${SRC_PATH}simulation/
-SRC_SIMULATION = ${addprefix ${SRC_SIMULATION_PATH}, print_status.c \
+SRC_SIMULATION = ${addprefix ${SRC_SIMULATION_PATH}, print.c \
 														check_ending.c \
 														routine.c \
 														simulation.c \
-														time_utils.c \
+														time.c \
 														watcher.c}
 
 SRC = ${SRC_TABLE} ${SRC_SIMULATION} ${SRC_PATH}main.c
