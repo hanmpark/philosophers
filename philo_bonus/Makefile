@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/06 17:10:31 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/25 19:24:21 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/05/30 15:33:41 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,10 +54,6 @@ ifdef DEBUG
 	CFLAGS += -fsanitize=address -g
 endif
 
-ifdef THREAD
-	CFLAGS += -fsanitize=thread -g
-endif
-
 PTHREAD = -lpthread
 
 HEADER_PATH = ./inc/
@@ -86,9 +82,6 @@ ${NAME}: ${OBJ}
 
 debug:
 	@${MAKE} DEBUG=1
-
-thread:
-	@${MAKE} THREAD=1
 
 clean:
 	@rm -f ${OBJ}
