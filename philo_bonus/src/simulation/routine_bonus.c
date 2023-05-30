@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 16:43:10 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:39:07 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,14 @@ static void	lonely_routine(t_philo *philo)
 */
 void	*launch_routine(t_philo *philo)
 {
-	if (!philo->table->nbr_meals || !philo->table->tm_starve)
-		return (NULL);
+	if (!philo->table->nbr_meals)
+		exit(EXIT_SUCCESS);
+	else if (!philo->table->tm_starve)
+	{
+		print_status(philo, true, DEAD);
+		sem_post(philo->table->sim_lock);
+		exit(EXIT_SUCCESS);
+	}
 	if (philo->table->nbr_philo == 1)
 		lonely_routine(philo);
 	else if (philo->id % 2)

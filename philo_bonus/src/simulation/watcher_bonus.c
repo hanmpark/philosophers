@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:37:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 16:41:41 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:38:41 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	*watcher(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	if (!philo->table->nbr_meals)
+	if (!philo->table->nbr_meals || !philo->table->tm_starve)
 		return (NULL);
 	while ("Philosophers are annoying")
 	{

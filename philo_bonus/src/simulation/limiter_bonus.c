@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:05:20 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 16:35:33 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:40:43 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ void	*limiter(void *arg)
 	t_table			*table;
 
 	table = (t_table *)arg;
-	if (!table->nbr_meals || !table->nbr_philo || !table->tm_starve)
+	if (!table->nbr_meals)
 	{
 		sem_post(table->sim_lock);
 		return (NULL);
 	}
+	if (!table->tm_starve)
+		return (NULL);
 	fulfilled_meals = 0;
 	while (fulfilled_meals < table->nbr_philo && !table->end_sim)
 	{

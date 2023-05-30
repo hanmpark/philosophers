@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:58:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 15:44:24 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:47:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*individual_sem_name(char *name, unsigned int number);
 
 /* ROUTINE */
 bool	start_simulation(t_table *table);
-void	stop_simulation(t_table *table);
+void	end_simulation(t_table *table);
 void	*launch_routine(t_philo *philo);
 void	*watcher(void *data);
 void	*limiter(void *arg);

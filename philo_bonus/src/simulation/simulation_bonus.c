@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:46:57 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 16:41:18 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:57:31 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	start_simulation(t_table *table)
 
 	table->tm_start = give_current_time();
 	i = 0;
-	while (i < table->nbr_philo && table->nbr_philo)
+	while (i < table->nbr_philo)
 	{
 		table->philo[i].last_meal = table->tm_start;
 		table->philo[i].pid = fork();
@@ -56,7 +56,7 @@ bool	start_simulation(t_table *table)
 * - destroys the semaphores
 * - frees the allocated pointers
 */
-void	stop_simulation(t_table *table)
+void	end_simulation(t_table *table)
 {
 	sem_wait(table->sim_lock);
 	table->end_sim = true;
@@ -64,6 +64,5 @@ void	stop_simulation(t_table *table)
 	pthread_join(table->limiter, NULL);
 	kill_philosophers(table);
 	clean_table(table, true);
-	system("leaks philo_bonus");
 	exit(EXIT_SUCCESS);
 }

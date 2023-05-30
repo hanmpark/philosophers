@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:07:06 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 15:05:45 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:20:34 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	*watcher(void *arg)
 	t_table	*table;
 
 	table = (t_table *)arg;
-	if (table->nbr_meals == 0)
+	if (!table->nbr_meals)
 		return (NULL);
 	while ("Philosophers are annoying")
 	{
