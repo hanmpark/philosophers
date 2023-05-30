@@ -6,12 +6,12 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:32:52 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 15:03:01 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:06:38 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef SIMULATION_H
+# define SIMULATION_H
 
 # include <stdlib.h>
 # include <pthread.h>
@@ -44,24 +44,22 @@ typedef struct s_table
 	struct s_philo	*philo;
 }	t_table;
 
-// TABLE INITIALIZATION
+/* INITIALIZATION */
 t_table	*init_table(int argc, char **argv);
 int		philo_atoi(char *arg);
 bool	check_arguments(int argc, char **argv);
 bool	init_global_mutexes(t_table *table);
 bool	init_philosophers(t_table *table);
 
-// ROUTINE FOR PHILOSOPHER(S)
+/* ROUTINE */
 bool	start_simulation(t_table *table);
 void	end_simulation(t_table *table);
 void	*launch_routine(void *arg);
 
-// STOP SIMULATION
+/* EXIT */
 void	*watcher(void *arg);
 void	set_sim_state(t_table *table, bool state);
 bool	check_sim_state(t_table *table);
-
-// FREES ALLOCATED POINTERS
 void	clean_table(t_table *table, bool mutex);
 
 #endif

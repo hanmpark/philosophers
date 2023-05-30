@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 13:35:33 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 15:10:01 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:03:44 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ bool	start_simulation(t_table *table)
 			return (init_error(ERR_THREAD, table, true));
 		i++;
 	}
-	if (table->nbr_philo > 1)
-		if (pthread_create(&table->watcher, NULL, &watcher, table))
-			return (init_error(ERR_THREAD, table, true));
+	if (pthread_create(&table->watcher, NULL, &watcher, table))
+		return (init_error(ERR_THREAD, table, true));
 	return (true);
 }
 
@@ -54,7 +53,6 @@ void	end_simulation(t_table *table)
 		pthread_join(table->philo[i].thread, NULL);
 		i++;
 	}
-	if (table->nbr_philo > 1)
-		pthread_join(table->watcher, NULL);
+	pthread_join(table->watcher, NULL);
 	clean_table(table, true);
 }

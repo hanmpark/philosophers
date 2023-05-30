@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 12:58:53 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 15:24:32 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:03:21 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "status.h"
 #include "timer.h"
 
-static void	take_forks(t_philo *ph)
+static void	eat(t_philo *ph)
 {
 	pthread_mutex_lock(&ph->table->fork[ph->id - 1]);
 	print_status(ph, false, FORK);
@@ -26,13 +26,13 @@ static void	take_forks(t_philo *ph)
 	ph->times_ate++;
 	pthread_mutex_unlock(&ph->meal_lock);
 	philo_wait(ph->table, EAT);
+	pthread_mutex_unlock(&ph->table->fork[ph->id - 1]);
+	pthread_mutex_unlock(&ph->table->fork[ph->id % ph->table->nbr_philo]);
 }
 
 static void	routine(t_philo *ph)
 {
-	take_forks(ph);
-	pthread_mutex_unlock(&ph->table->fork[ph->id - 1]);
-	pthread_mutex_unlock(&ph->table->fork[ph->id % ph->table->nbr_philo]);
+	eat(ph);
 	print_status(ph, false, SLEEP);
 	philo_wait(ph->table, SLEEP);
 	print_status(ph, false, THINK);
@@ -43,9 +43,7 @@ static void	lonely_routine(t_philo *ph)
 	pthread_mutex_lock(&ph->table->fork[0]);
 	print_status(ph, false, FORK);
 	philo_wait(ph->table, DEAD);
-	print_status(ph, true, DEAD);
 	pthread_mutex_unlock(&ph->table->fork[0]);
-	ph->table->end_sim = true;
 }
 
 /* Launches a routine:
