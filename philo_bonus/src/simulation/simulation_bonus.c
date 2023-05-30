@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:46:57 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 17:57:31 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/31 00:01:58 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static bool	philosopher(t_philo *philo)
 			return (false);
 	launch_routine(philo);
 	exit(EXIT_SUCCESS);
+	return (true);
 }
 
 /* Initializes processes:
