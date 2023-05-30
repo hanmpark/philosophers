@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:01:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 11:44:35 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:12:34 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*print_status(t_philo *philo, bool last, t_status status)
 	time_t	timestamp;
 
 	pthread_mutex_lock(&philo->table->print_lock);
-	if (check_end(philo->table) == true && last == false)
+	if (check_sim_state(philo->table) && !last)
 	{
 		pthread_mutex_unlock(&philo->table->print_lock);
 		return (NULL);

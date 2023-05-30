@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:31:49 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/22 23:09:20 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 14:58:16 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static bool	init_forks(t_table *table)
 	i = 0;
 	while (i < table->nbr_philo)
 	{
-		if (pthread_mutex_init(&table->fork[i], NULL) != 0)
+		if (pthread_mutex_init(&table->fork[i], NULL))
 			return (init_error(ERR_FORKS, table, false));
 		i++;
 	}
@@ -32,11 +32,11 @@ static bool	init_forks(t_table *table)
 
 bool	init_global_mutexes(t_table *table)
 {
-	if (pthread_mutex_init(&table->sim_lock, NULL) != 0)
+	if (pthread_mutex_init(&table->sim_lock, NULL))
 		return (init_error(ERR_MUTEX, table, false));
-	if (pthread_mutex_init(&table->print_lock, NULL) != 0)
+	if (pthread_mutex_init(&table->print_lock, NULL))
 		return (init_error(ERR_MUTEX, table, false));
-	if (init_forks(table) == false)
+	if (!init_forks(table))
 		return (false);
 	return (true);
 }

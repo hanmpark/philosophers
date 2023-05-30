@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:27:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 11:39:22 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:05:08 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	destroy_mutexes(t_table *table)
 	while (i < table->nbr_philo)
 	{
 		pthread_mutex_destroy(&table->philo[i].meal_lock);
-		pthread_mutex_destroy(&table->philo[i].times_lock);
 		pthread_mutex_destroy(&table->fork[i]);
 		i++;
 	}
@@ -35,7 +34,7 @@ void	clean_table(t_table *table, bool mutex)
 {
 	if (!table)
 		return ;
-	if (mutex == true)
+	if (mutex)
 		destroy_mutexes(table);
 	if (table->fork != NULL)
 		free(table->fork);

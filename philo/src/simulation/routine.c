@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 12:58:53 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/22 23:47:59 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:24:32 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ static void	take_forks(t_philo *ph)
 	print_status(ph, false, EAT);
 	pthread_mutex_lock(&ph->meal_lock);
 	ph->last_meal = current_time();
-	pthread_mutex_unlock(&ph->meal_lock);
-	pthread_mutex_lock(&ph->times_lock);
 	ph->times_ate++;
-	pthread_mutex_unlock(&ph->times_lock);
+	pthread_mutex_unlock(&ph->meal_lock);
 	philo_wait(ph->table, EAT);
 }
 
@@ -51,32 +49,29 @@ static void	lonely_routine(t_philo *ph)
 }
 
 /* Launches a routine:
-* - before launching any routine, waits for all other threads to be created
-	to start
 * - if there is 1 philosopher, launches the routine for 1 philosopher
 * - else launches the basic routine (eat, sleep and think)
 */
-void	*launch_routine(void *data)
+void	*launch_routine(void *arg)
 {
 	t_philo	*philo;
 
-	philo = (t_philo *)data;
-	if (philo->table->nbr_meals == 0 || philo->table->tm_starve == 0)
+	philo = (t_philo *)arg;
+	if (!philo->table->nbr_meals || !philo->table->tm_starve)
 		return (NULL);
 	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = philo->table->tm_start;
 	pthread_mutex_unlock(&philo->meal_lock);
-	wait_until_start(philo->table->tm_start);
-	if (check_end(philo->table) == true)
+	if (check_sim_state(philo->table))
 		return (NULL);
 	if (philo->table->nbr_philo == 1)
 		lonely_routine(philo);
-	else if (philo->id % 2 != 0)
+	else if (philo->id % 2)
 	{
 		print_status(philo, false, THINK);
 		usleep(10000);
 	}
-	while (check_end(philo->table) == false)
+	while (!check_sim_state(philo->table))
 		routine(philo);
 	return (NULL);
 }
