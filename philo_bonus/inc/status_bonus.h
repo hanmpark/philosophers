@@ -6,12 +6,12 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 17:23:41 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/22 11:14:29 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:44:59 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINT_STATUS_BONUS_H
-# define PRINT_STATUS_BONUS_H
+#ifndef STATUS_BONUS_H
+# define STATUS_BONUS_H
 
 typedef enum e_status
 {
