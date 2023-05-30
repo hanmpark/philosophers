@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:58:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/25 20:08:16 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:44:24 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <semaphore.h>
 # include <pthread.h>
 # include <stdbool.h>
+
+# define CHILD_PROCESS 0
+# define ERROR -1
 
 typedef struct s_philo
 {

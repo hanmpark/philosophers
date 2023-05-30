@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:26:46 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/23 13:46:05 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:38:30 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_strlen(char *str)
 	return (len);
 }
 
-static int	nbrlen(unsigned int number)
+static int	ft_nbrlen(unsigned int number)
 {
 	int	len;
 
@@ -40,7 +40,7 @@ static char	*ft_utoa(unsigned int number)
 	char	*number_str;
 	int		len;
 
-	len = nbrlen(number);
+	len = ft_nbrlen(number);
 	number_str = malloc((len + 1) * sizeof(char));
 	if (!number_str)
 		return (NULL);

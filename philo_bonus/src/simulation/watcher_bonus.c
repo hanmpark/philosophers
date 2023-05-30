@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:37:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/25 19:33:33 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:41:41 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static bool	healthy_philosopher(t_philo *philo)
 }
 
 /* Watcher's thread:
-* - waits for all other processes
 * - supervise philosophers
 * - checks tm_starve
 * - checks nbr_meals
@@ -43,12 +42,12 @@ void	*watcher(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	if (philo->table->nbr_philo < 2 || philo->table->nbr_meals == 0)
+	if (!philo->table->nbr_meals)
 		return (NULL);
 	while ("Philosophers are annoying")
 	{
-		if (healthy_philosopher(philo) == false)
-			exit(EXIT_FAILURE);
+		if (!healthy_philosopher(philo))
+			exit(EXIT_SUCCESS);
 		usleep(1000);
 	}
 	return (NULL);

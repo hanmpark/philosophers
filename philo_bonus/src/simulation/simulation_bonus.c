@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:46:57 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/25 20:09:40 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:41:18 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 #include "errors_bonus.h"
 #include "status_bonus.h"
 #include "timer_bonus.h"
+
+static bool	philosopher(t_philo *philo)
+{
+	if (philo->table->nbr_philo > 1)
+		if (pthread_create(&philo->watcher, NULL, &watcher, philo))
+			return (false);
+	launch_routine(philo);
+	exit(EXIT_SUCCESS);
+}
 
 /* Initializes processes:
 * - each process represents a philosopher
@@ -25,20 +34,15 @@ bool	start_simulation(t_table *table)
 
 	table->tm_start = give_current_time();
 	i = 0;
-	while (i < table->nbr_philo)
+	while (i < table->nbr_philo && table->nbr_philo)
 	{
 		table->philo[i].last_meal = table->tm_start;
 		table->philo[i].pid = fork();
-		if (table->philo[i].pid == -1)
+		if (table->philo[i].pid == ERROR)
 			return (init_error(ERR_PHILO, table, true));
-		if (table->philo[i].pid == 0)
-		{
-			if (pthread_create(&table->philo[i].watcher, NULL, \
-				&watcher, &table->philo[i]))
+		if (table->philo[i].pid == CHILD_PROCESS)
+			if (!philosopher(&table->philo[i]))
 				return (init_error(ERR_PHILO, table, true));
-			launch_routine(&table->philo[i]);
-			exit(EXIT_SUCCESS);
-		}
 		i++;
 	}
 	if (pthread_create(&table->limiter, NULL, &limiter, table))
@@ -47,6 +51,7 @@ bool	start_simulation(t_table *table)
 }
 
 /* End the simulation:
+* - waits for the sem_post(table->sim_lock)
 * - joins the limiter's thread
 * - destroys the semaphores
 * - frees the allocated pointers
@@ -59,5 +64,6 @@ void	stop_simulation(t_table *table)
 	pthread_join(table->limiter, NULL);
 	kill_philosophers(table);
 	clean_table(table, true);
+	system("leaks philo_bonus");
 	exit(EXIT_SUCCESS);
 }

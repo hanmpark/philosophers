@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/25 19:20:42 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:43:10 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "status_bonus.h"
 #include "timer_bonus.h"
 
-static void	take_forks(t_philo *philo)
+static void	eat(t_philo *philo)
 {
 	sem_wait(philo->table->fork_lock);
 	print_status(philo, false, FORK);
@@ -26,16 +26,16 @@ static void	take_forks(t_philo *philo)
 	if (++philo->count_meal == philo->table->nbr_meals)
 		sem_post(philo->table->ate_enough);
 	sem_post(philo->meal_lock);
-	philo_wait(philo->table, EAT);
+	philo_wait(philo->table, philo->table->tm_eat);
+	sem_post(philo->table->fork_lock);
+	sem_post(philo->table->fork_lock);
 }
 
 static void	routine(t_philo *philo)
 {
-	take_forks(philo);
-	sem_post(philo->table->fork_lock);
-	sem_post(philo->table->fork_lock);
+	eat(philo);
 	print_status(philo, false, SLEEP);
-	philo_wait(philo->table, SLEEP);
+	philo_wait(philo->table, philo->table->tm_sleep);
 	print_status(philo, false, THINK);
 }
 
@@ -43,27 +43,25 @@ static void	lonely_routine(t_philo *philo)
 {
 	sem_wait(philo->table->fork_lock);
 	print_status(philo, false, FORK);
-	philo_wait(philo->table, DEAD);
+	philo_wait(philo->table, philo->table->tm_starve);
 	print_status(philo, true, DEAD);
 	sem_post(philo->table->sim_lock);
 }
 
 /* Launches a routine:
-* - before launching any routine, waits for all other processes to be created
-	to start
 * - if there is 1 philosopher, launches the routine for 1 philosopher
 * - else launches the basic routine (eat, sleep and think)
 */
 void	*launch_routine(t_philo *philo)
 {
-	if (philo->table->nbr_meals == 0 || philo->table->tm_starve == 0)
+	if (!philo->table->nbr_meals || !philo->table->tm_starve)
 		return (NULL);
 	if (philo->table->nbr_philo == 1)
 		lonely_routine(philo);
-	else if (philo->id % 2 != 0)
+	else if (philo->id % 2)
 	{
 		print_status(philo, false, THINK);
-		usleep(10000);
+		philo_wait(philo->table, 10);
 	}
 	while ("Philosophers are annoying")
 		routine(philo);

@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 09:41:39 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/25 18:31:58 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:04:21 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,11 @@ time_t	give_current_time(void)
 *	for precision's sake
 * - does not wait the end_sim flag is set to true during the loop
 */
-void	*philo_wait(t_table *table, t_status status)
+void	*philo_wait(t_table *table, time_t wait_time)
 {
 	time_t	timestamp;
-	time_t	wait_time;
 
 	timestamp = give_current_time();
-	wait_time = 0;
-	if (status == EAT)
-		wait_time = table->tm_eat;
-	else if (status == SLEEP)
-		wait_time = table->tm_sleep;
-	else if (status == DEAD)
-		wait_time = table->tm_starve;
 	while (give_current_time() - timestamp < wait_time)
 		usleep(100);
 	return (NULL);

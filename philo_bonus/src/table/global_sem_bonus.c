@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:20:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/25 12:49:59 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:38:09 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ bool	init_global_sem(t_table *table)
 	sem_unlink("/print_lock");
 	sem_unlink("/sim_lock");
 	sem_unlink("/ate_enough");
-	table->fork_lock = sem_open("/fork_lock", O_CREAT, S_IRUSR | S_IWUSR, \
+	table->fork_lock = sem_open("/fork_lock", O_CREAT | O_EXCL, 0664, \
 		table->nbr_philo);
 	if (table->fork_lock == SEM_FAILED)
 		return (init_error(ERR_SEM, table, false));
-	table->print_lock = sem_open("/print_lock", O_CREAT, S_IRUSR | S_IWUSR, 1);
+	table->print_lock = sem_open("/print_lock", O_CREAT | O_EXCL, 0664, 1);
 	if (table->print_lock == SEM_FAILED)
 		return (init_error(ERR_SEM, table, false));
-	table->sim_lock = sem_open("/sim_lock", O_CREAT, S_IRUSR | S_IWUSR, 0);
+	table->sim_lock = sem_open("/sim_lock", O_CREAT | O_EXCL, 0664, 0);
 	if (table->sim_lock == SEM_FAILED)
 		return (init_error(ERR_SEM, table, false));
-	table->ate_enough = sem_open("/ate_enough", O_CREAT, S_IRUSR | S_IWUSR, 0);
+	table->ate_enough = sem_open("/ate_enough", O_CREAT | O_EXCL, 0664, 0);
 	if (table->ate_enough == SEM_FAILED)
 		return (init_error(ERR_SEM, table, false));
 	return (true);
