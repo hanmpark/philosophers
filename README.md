@@ -10,18 +10,7 @@ You will learn how to manipulate threads.
 You will learn about mutexes, semaphores and shared memory.
 
 ### Short introduction to threads
-To manipulate threads, you will need to compile your code with the -pthread flag.
-To create one thread you will need to use the following function:
-
-```c
-int	pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg);
-```
-
-***Parameters:***
-- **thread:** pointer to an unsigned integer value that returns the thread id of the thread created.
-- **attr:** pointer to a structure that is used to define thread attributes like detached state, scheduling policy, stack address, etc. Set to *NULL* for default thread attributes.
-- **start_routine:** pointer to a subroutine that is executed by the thread. The return type and parameter type of the subroutine must be of type void *. The function has a single attribute but if multiple values need to be passed to the function, a struct must be used.
-- **arg:** pointer to void that contains the argument(s) to the function defined in the earlier argument.
+> A thread is a separate sequence of execution within a program. It allows for **multitasking** and **concurrent execution** of tasks by dividing a program into smaller units. Threads share the **same memory space and resources**, but have their own program counters and stacks. They are used to improve performance, responsiveness, and resource utilization in concurrent programming.
 
 ***
 ## Difficulties
@@ -33,7 +22,7 @@ But:
 - A single process can contain multiple threads.
 - Address space: when Forking, we duplicate the memory. With threads, ***all the variables has the same address***.
 
-Thus, we will have to be careful accessing the memory.
+Thus, when there are multiple threads, we will have to be careful accessing the memory.
 
 ### Race conditions 🏎
 
