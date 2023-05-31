@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 09:37:35 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/25 12:50:21 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:02:48 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 #include "timer_bonus.h"
 #include <stdio.h>
 
-/* Prints the status for philosophers:
-* - if the simulation has ended, it does not print anything
-*/
 void	*print_status(t_philo *philo, bool last, t_status status)
 {
 	time_t	timestamp;

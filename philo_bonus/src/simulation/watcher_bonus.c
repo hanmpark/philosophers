@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:37:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 17:38:41 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:04:13 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ static bool	healthy_philosopher(t_philo *philo)
 }
 
 /* Watcher's thread:
-* - supervise philosophers
+* - supervise its own philosopher
 * - checks tm_starve
-* - checks nbr_meals
 * - if an end condition is encountered, set end_sim to true
 */
 void	*watcher(void *data)

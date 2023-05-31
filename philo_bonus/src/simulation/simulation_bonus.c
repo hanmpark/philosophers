@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:46:57 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/31 00:01:58 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/31 12:58:02 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static bool	philosopher(t_philo *philo)
 
 /* Initializes processes:
 * - each process represents a philosopher
-* - if there is more than 1 philosopher, initializes the watcher's thread
+* - each philosopher has its own wacther's thread
+* - limiter's thread counts the nbr_meals if it is set
 */
 bool	start_simulation(t_table *table)
 {

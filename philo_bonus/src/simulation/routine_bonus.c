@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 17:39:07 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:03:11 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	lonely_routine(t_philo *philo)
 }
 
 /* Launches a routine:
-* - if there is 1 philosopher, launches the routine for 1 philosopher
+* - if there is 1 philosopher, launches lonely_routine()
 * - else launches the basic routine (eat, sleep and think)
 */
 void	*launch_routine(t_philo *philo)
