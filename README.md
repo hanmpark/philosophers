@@ -34,6 +34,7 @@ Race conditions can cause bugs that are challenging to debug because they are of
 
 > A deadlock in concurrent programming is a situation where two or more threads or processes are unable to proceed because each is waiting for the other to release a resource that it holds. This results in a standstill or a permanent blocking of progress, where the involved threads or processes are unable to continue their execution.
 
+***
 ## Compiling
 
 First of all, there are 2 versions of my program:
