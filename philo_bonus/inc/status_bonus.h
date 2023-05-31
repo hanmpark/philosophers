@@ -6,12 +6,18 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 17:23:41 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 16:44:59 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:58:43 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STATUS_BONUS_H
 # define STATUS_BONUS_H
+
+# define MSG_DEAD "%ld %d died\n"
+# define MSG_FORK "%ld %d has taken a fork\n"
+# define MSG_EAT "%ld %d is eating\n"
+# define MSG_SLEEP "%ld %d is sleeping\n"
+# define MSG_THINK "%ld %d is thinking\n"
 
 typedef enum e_status
 {
