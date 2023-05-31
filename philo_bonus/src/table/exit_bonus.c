@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:27:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/25 19:20:59 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:09:10 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ bool	init_error(char *msg, t_table *table, bool semaphore)
 		clean_table(table, semaphore);
 	while (*msg)
 		write(2, &*msg++, sizeof(char));
+	write(2, HELP, sizeof(HELP));
 	return (false);
 }
