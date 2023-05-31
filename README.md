@@ -9,6 +9,11 @@ on the same memory space.
 You will learn how to manipulate threads.
 You will learn about mutexes, semaphores and shared memory.
 
+### Dining Philosophers Problem
+**The Dining Philosophers** problem is a classic synchronization problem in computer science that illustrates challenges in resource allocation and concurrency. It involves a group of philosophers sitting around a table, with each philosopher alternating between eating, sleeping and thinking. There is a chopstick placed between each pair of adjacent philosophers. The problem arises when each philosopher needs two chopsticks to eat, but there are only as many chopsticks as there are philosophers.
+
+The challenge is to devise a solution that allows each philosopher to eat without causing a **deadlock**. Different synchronization techniques like **mutexes** or **semaphores** can be used to manage access to the chopsticks and ensure that only one philosopher can pick up both chopsticks at the same time, while others wait their turn.
+
 ### Short introduction to threads
 > A thread is a separate sequence of execution within a program. It allows for **multitasking** and **concurrent execution** of tasks by dividing a program into smaller units. Threads share the **same memory space and resources**, but have their own program counters and stacks. They are used to improve performance, responsiveness, and resource utilization in concurrent programming.
 
