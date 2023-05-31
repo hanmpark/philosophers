@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 09:41:39 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 16:04:21 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:14:53 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ time_t	give_current_time(void)
 *	for precision's sake
 * - does not wait the end_sim flag is set to true during the loop
 */
-void	*philo_wait(t_table *table, time_t wait_time)
+void	*philo_wait(time_t wait_time)
 {
 	time_t	timestamp;
 

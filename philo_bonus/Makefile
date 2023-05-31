@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/06 17:10:31 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/30 15:33:41 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/05/31 14:13:21 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,11 +48,7 @@ OBJ = ${SRC:.c=.o}
 
 # --------------------------------- COMPILER --------------------------------- #
 CC = gcc
-CFLAGS = 
-
-ifdef DEBUG
-	CFLAGS += -fsanitize=address -g
-endif
+CFLAGS = -Wall -Wextra -Werror
 
 PTHREAD = -lpthread
 
@@ -80,9 +76,6 @@ ${NAME}: ${OBJ}
 	@${CC} ${CFLAGS} ${PTHREAD} ${OBJ} -o ${NAME}
 	@echo "\n\n\n   ${BOLD}${CUR}${LYELLOW}PHILO BONUS COMPILED ✨${DEF}\n"
 
-debug:
-	@${MAKE} DEBUG=1
-
 clean:
 	@rm -f ${OBJ}
 	@echo "${ORANGE}${BOLD}\tCLEANING${DEF}"
@@ -95,4 +88,4 @@ fclean: clean
 re: fclean
 	@${MAKE} all
 
-.PHONY: all clean fclean re debug thread
+.PHONY: all clean fclean re

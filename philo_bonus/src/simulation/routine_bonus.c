@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:10:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/31 13:03:11 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:16:07 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	eat(t_philo *philo)
 	if (++philo->count_meal == philo->table->nbr_meals)
 		sem_post(philo->table->ate_enough);
 	sem_post(philo->meal_lock);
-	philo_wait(philo->table, philo->table->tm_eat);
+	philo_wait(philo->table->tm_eat);
 	sem_post(philo->table->fork_lock);
 	sem_post(philo->table->fork_lock);
 }
@@ -35,7 +35,7 @@ static void	routine(t_philo *philo)
 {
 	eat(philo);
 	print_status(philo, false, SLEEP);
-	philo_wait(philo->table, philo->table->tm_sleep);
+	philo_wait(philo->table->tm_sleep);
 	print_status(philo, false, THINK);
 }
 
@@ -43,7 +43,7 @@ static void	lonely_routine(t_philo *philo)
 {
 	sem_wait(philo->table->fork_lock);
 	print_status(philo, false, FORK);
-	philo_wait(philo->table, philo->table->tm_starve);
+	philo_wait(philo->table->tm_starve);
 	print_status(philo, true, DEAD);
 	sem_post(philo->table->sim_lock);
 }
@@ -67,7 +67,7 @@ void	*launch_routine(t_philo *philo)
 	else if (philo->id % 2)
 	{
 		print_status(philo, false, THINK);
-		philo_wait(philo->table, 10);
+		philo_wait(10);
 	}
 	while ("Philosophers are annoying")
 		routine(philo);
