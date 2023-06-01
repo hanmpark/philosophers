@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:32:52 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 17:06:38 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/06/01 07:00:37 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	pthread_mutex_t	meal_lock;
-	pthread_mutex_t	times_lock;
 	time_t			last_meal;
 	unsigned int	id;
 	int				times_ate;
