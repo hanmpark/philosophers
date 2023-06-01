@@ -16,9 +16,9 @@ The challenge is to devise a solution that allows each philosopher to eat withou
 
 ## Code structure
 ### ./philo
-![philo](https://github.com/Nonino42/philosophers/blob/master/code_struct/philo.png)
+![philo](https://github.com/hanmpark/philosophers/blob/master/code_struct/philo.png)
 ### ./philo_bonus
-![philo](https://github.com/Nonino42/philosophers/blob/master/code_struct/philo_bonus.png)
+![philo](https://github.com/hanmpark/philosophers/blob/master/code_struct/philo_bonus.png)
 
 ### Short introduction to threads
 > A thread is a separate sequence of execution within a program. It allows for **multitasking** and **concurrent execution** of tasks by dividing a program into smaller units. Threads share the **same memory space and resources**, but have their own program counters and stacks. They are used to improve performance, responsiveness, and resource utilization in concurrent programming.
