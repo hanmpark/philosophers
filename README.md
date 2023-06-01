@@ -4,7 +4,7 @@
 
 ## Summary
 
-This project is an introduction to threading and processes, and how to work on the same memory
+This project is an introduction to threads and processes, and how to work on the same memory
 on the same memory space.
 You will learn how to manipulate threads.
 You will learn about mutexes, semaphores and shared memory.
@@ -21,7 +21,7 @@ The challenge is to devise a solution that allows each philosopher to eat withou
 ![philo](https://github.com/hanmpark/philosophers/blob/master/code_struct/philo_bonus.png)
 
 ### Short introduction to threads
-> A thread is a separate sequence of execution within a program. It allows for **multitasking** and **concurrent execution** of tasks by dividing a program into smaller units. Threads share the **same memory space and resources**, but have their own program counters and stacks. They are used to improve performance, responsiveness, and resource utilization in concurrent programming.
+> A thread is a separate sequence of execution within a program. It allows for **multitasking** and **concurrent execution** of tasks by dividing a program into smaller units. Threads share the **same memory space and resources**. They are used to improve performance, responsiveness, and resource utilization in concurrent programming.
 
 ***
 ## Difficulties
@@ -37,7 +37,7 @@ Thus, when there are multiple threads, we will have to be careful accessing the 
 
 ### Race conditions 🏎
 
-> A race condition in C occurs when multiple parts of a program try to **access or manipulate** shared data **simultaneously**, leading to unpredictable or erroneous results. It's like a "race" between different parts of the code to complete their operations first, and the outcome of the race is uncertain and can vary each time the program runs.
+> A race condition in C occurs when multiple parts of a program try to **access or manipulate** shared data **simultaneously**, leading to unpredictable or erroneous results. It's like a *"race"* between different parts of the code to complete their operations first, and the outcome of the race is uncertain and can vary each time the program runs.
 
 Race conditions can cause bugs that are challenging to debug because they are often unpredictable and dependent on the timing and interleaving of operations. Proper synchronization techniques, such as **locks** or **mutexes**, can be used to address race conditions and ensure the correct behavior of concurrent programs.
 
