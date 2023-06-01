@@ -14,6 +14,12 @@ You will learn about mutexes, semaphores and shared memory.
 
 The challenge is to devise a solution that allows each philosopher to eat without causing a **deadlock**. Different synchronization techniques like **mutexes** or **semaphores** can be used to manage access to the chopsticks and ensure that only one philosopher can pick up both chopsticks at the same time, while others wait their turn.
 
+## Code structure
+### ./philo
+![philo](https://github.com/Nonino42/so_long/code_struct/philo.png)
+### ./philo_bonus
+![philo](https://github.com/Nonino42/so_long/code_struct/philo_bonus.png)
+
 ### Short introduction to threads
 > A thread is a separate sequence of execution within a program. It allows for **multitasking** and **concurrent execution** of tasks by dividing a program into smaller units. Threads share the **same memory space and resources**, but have their own program counters and stacks. They are used to improve performance, responsiveness, and resource utilization in concurrent programming.
 
