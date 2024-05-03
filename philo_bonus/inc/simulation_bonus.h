@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:58:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 16:47:25 by hanmpark         ###   ########.fr       */
+/*   Updated: 2024/05/03 00:46:44 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <semaphore.h>
 # include <pthread.h>
 # include <stdbool.h>
+# include <fcntl.h>
 
 # define CHILD_PROCESS 0
 # define ERROR -1
@@ -35,7 +36,7 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	unsigned int	nbr_philo;
+	int				nbr_philo;
 	int				nbr_meals;
 	bool			end_sim;
 	time_t			tm_start;
@@ -45,7 +46,7 @@ typedef struct s_table
 	sem_t			*fork_lock;
 	sem_t			*print_lock;
 	sem_t			*sim_lock;
-	sem_t			*ate_enough;
+	sem_t			*philo_full;
 	pthread_t		limiter;
 	struct s_philo	*philo;
 }	t_table;

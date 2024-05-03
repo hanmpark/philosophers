@@ -6,12 +6,19 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:26:46 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 15:38:30 by hanmpark         ###   ########.fr       */
+/*   Updated: 2024/05/03 01:57:27 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation_bonus.h"
 
+/**
+ * @brief Calculates the length of a string.
+ *
+ * @param str The string to calculate the length of.
+ *
+ * @return Returns the length of the string.
+ */
 static int	ft_strlen(char *str)
 {
 	int	len;
@@ -22,6 +29,13 @@ static int	ft_strlen(char *str)
 	return (len);
 }
 
+/**
+ * @brief Calculates the number of digits in a number.
+ *
+ * @param number The number to calculate the number of digits of.
+ *
+ * @return Returns the number of digits in the number.
+ */
 static int	ft_nbrlen(unsigned int number)
 {
 	int	len;
@@ -35,6 +49,14 @@ static int	ft_nbrlen(unsigned int number)
 	return (len);
 }
 
+/**
+ * @brief Converts an unsigned integer to a string.
+ *
+ * @param number The number to convert to a string.
+ *
+ * @return Returns a string representation of the number, or NULL if there was
+ * an error during the conversion.
+ */
 static char	*ft_utoa(unsigned int number)
 {
 	char	*number_str;
@@ -53,6 +75,15 @@ static char	*ft_utoa(unsigned int number)
 	return (number_str);
 }
 
+/**
+ * @brief Concatenates two strings.
+ *
+ * @param s1 The first string to concatenate.
+ * @param s2 The second string to concatenate.
+ *
+ * @return Returns a new string that is the concatenation of s1 and s2, or NULL
+ * if there was an error during the concatenation.
+ */
 static char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*join;
@@ -72,6 +103,15 @@ static char	*ft_strjoin(char *s1, char *s2)
 	return (join);
 }
 
+/**
+ * @brief Creates a unique name for an individual semaphore.
+ *
+ * @param name The base name for the semaphore.
+ * @param number The number to append to the base name to create a unique name.
+ *
+ * @return Returns a unique name for an individual semaphore, or NULL if there
+ * was an error during the creation of the name.
+ */
 char	*individual_sem_name(char *name, unsigned int number)
 {
 	char	*nbrstr;

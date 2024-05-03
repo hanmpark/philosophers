@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:59:59 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/06/01 15:28:29 by hanmpark         ###   ########.fr       */
+/*   Updated: 2024/05/03 01:44:28 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include "status.h"
 #include "timer.h"
 
+/**
+ * @brief Gets the current time in milliseconds.
+ *
+ * @return Returns the current time in milliseconds.
+ */
 time_t	current_time(void)
 {
 	struct timeval	tv;
@@ -22,18 +27,31 @@ time_t	current_time(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
+/**
+ * @brief Waits until the specified time.
+ *
+ * @param time The time to wait until, in milliseconds.
+ */
 void	wait_until_start(time_t time)
 {
 	while (current_time() < time)
 		usleep(100);
 }
 
-/* Waits for the given time in ms:
-* - usleep() is not as precise as it should be
-* - waits for wait_time in ms by using small intervals of usleep() call
-*	for precision's sake
-* - does not wait the end_sim flag is set to true during the loop
-*/
+/**
+ * @brief Waits for the given time in milliseconds.
+ *
+ * Waits for `wait_time` in milliseconds by using small intervals of `usleep()`
+ * call for precision's sake. Does not wait if the `end_sim` flag is set to true
+ * during the loop.
+ *
+ * @param table A pointer to the t_table structure that contains the simulation
+ * parameters.
+ * @param status The status of the philosopher (EAT, SLEEP, or DEAD).
+ *
+ * @return Returns NULL when the wait is over or if the `end_sim` flag is set to
+ * true.
+ */
 void	*philo_wait(t_table *table, t_status status)
 {
 	time_t	timestamp;

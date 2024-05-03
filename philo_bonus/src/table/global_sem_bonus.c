@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:20:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/05/30 15:38:09 by hanmpark         ###   ########.fr       */
+/*   Updated: 2024/05/03 01:58:05 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,26 @@
 #include "errors_bonus.h"
 #include <signal.h>
 
+/**
+ * @brief Initializes the global semaphores for the simulation.
+ *
+ * Unlinks any existing semaphores with the names "/fork_lock", "/print_lock",
+ * "/sim_lock", and "/philo_full", and then creates new semaphores with these
+ * names. If there is an error during the creation of any of these semaphores,
+ * returns false.
+ *
+ * @param table A pointer to the t_table structure that contains the simulation
+ * parameters.
+ *
+ * @return Returns true if the semaphores were successfully initialized, and
+ * false otherwise.
+ */
 bool	init_global_sem(t_table *table)
 {
 	sem_unlink("/fork_lock");
 	sem_unlink("/print_lock");
 	sem_unlink("/sim_lock");
-	sem_unlink("/ate_enough");
+	sem_unlink("/philo_full");
 	table->fork_lock = sem_open("/fork_lock", O_CREAT | O_EXCL, 0664, \
 		table->nbr_philo);
 	if (table->fork_lock == SEM_FAILED)
@@ -30,8 +44,8 @@ bool	init_global_sem(t_table *table)
 	table->sim_lock = sem_open("/sim_lock", O_CREAT | O_EXCL, 0664, 0);
 	if (table->sim_lock == SEM_FAILED)
 		return (init_error(ERR_SEM, table, false));
-	table->ate_enough = sem_open("/ate_enough", O_CREAT | O_EXCL, 0664, 0);
-	if (table->ate_enough == SEM_FAILED)
+	table->philo_full = sem_open("/philo_full", O_CREAT | O_EXCL, 0664, 0);
+	if (table->philo_full == SEM_FAILED)
 		return (init_error(ERR_SEM, table, false));
 	return (true);
 }

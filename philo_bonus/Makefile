@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/06 17:10:31 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/31 14:13:21 by hanmpark         ###   ########.fr        #
+#    Updated: 2024/05/03 00:16:16 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ OBJ = ${SRC:.c=.o}
 
 # --------------------------------- COMPILER --------------------------------- #
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 
 PTHREAD = -lpthread
 

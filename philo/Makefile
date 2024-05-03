@@ -6,7 +6,7 @@
 #    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 17:03:40 by hanmpark          #+#    #+#              #
-#    Updated: 2023/05/26 11:59:00 by hanmpark         ###   ########.fr        #
+#    Updated: 2024/05/02 23:35:46 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ OBJ = ${SRC:.c=.o}
 
 # --------------------------------- COMPILER --------------------------------- #
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g3
 
 ifdef DEBUG
 	CFLAGS += -fsanitize=address -g
